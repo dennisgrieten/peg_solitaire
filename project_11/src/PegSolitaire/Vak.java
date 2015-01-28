@@ -20,9 +20,10 @@ public class Vak {
         this.bal = bal;
     }
 
+    // Overhandig de bal
     public Ball giveBall() {
         Ball out = this.bal;
-        this.bal = null;
+        this.bal = null;    // Wis pointer van bal in dit vak
         return out;
     }
 }
