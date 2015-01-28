@@ -3,15 +3,15 @@ package PegSolitaire;
 /**
  * Created by dennis on 28/01/15.
  */
-public class Vak {
+public class Hole {
     private Ball bal;
     boolean deadZone = false; // Vlag voor dode hoeken
 
-    public Vak(Ball bal) {
+    public Hole(Ball bal) {
         this.bal = bal;
     }
 
-    public Vak(Ball bal, boolean deadZone) {
+    public Hole(Ball bal, boolean deadZone) {
         this.bal = bal;
         this.deadZone = deadZone;
     }
