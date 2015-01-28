@@ -8,7 +8,7 @@ public class Vak {
     boolean deadZone; // Vlag voor dode hoeken
 
     public void setBall(Ball bal) {
-
+        this.bal = bal;
     }
 
     public Ball giveBall() {
