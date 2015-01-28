@@ -5,7 +5,16 @@ package PegSolitaire;
  */
 public class Vak {
     private Ball bal;
-    boolean deadZone; // Vlag voor dode hoeken
+    boolean deadZone = false; // Vlag voor dode hoeken
+
+    public Vak(Ball bal) {
+        this.bal = bal;
+    }
+
+    public Vak(Ball bal, boolean deadZone) {
+        this.bal = bal;
+        this.deadZone = deadZone;
+    }
 
     public void setBall(Ball bal) {
         this.bal = bal;
