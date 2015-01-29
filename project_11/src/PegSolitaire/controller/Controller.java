@@ -1,4 +1,6 @@
-package PegSolitaire;
+package PegSolitaire.controller;
+
+import PegSolitaire.model.Matrix;
 
 /**
  * Created by dennis on 28/01/15.

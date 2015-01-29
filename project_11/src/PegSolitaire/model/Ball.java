@@ -1,4 +1,4 @@
-package PegSolitaire;
+package PegSolitaire.model;
 
 import java.util.Stack;
 

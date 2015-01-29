@@ -1,4 +1,4 @@
-package PegSolitaire;
+package PegSolitaire.model;
 
 /**
  * Created by dennis on 28/01/15.
