@@ -5,10 +5,11 @@ package PegSolitaire.model;
  */
 public class Hole {
     private Ball ball;
-    boolean deadZone = false;   // Vlag voor dode hoeken
+    private boolean deadZone;   // Vlag voor dode hoeken
 
     public Hole(Ball ball) {
         this.ball = ball;
+        this.deadZone = false;
     }
 
     public Hole(Ball ball, boolean deadZone) {
@@ -20,6 +21,10 @@ public class Hole {
         this.ball = bal;
     }
 
+    public void setDeadZone(boolean deadZone){
+        this.deadZone = deadZone;
+    }
+
     public void clearBall() {
         this.ball = null;   // Wis pointer van bal in dit vak
     }
@@ -29,5 +34,10 @@ public class Hole {
         Ball out = this.ball;
         clearBall();
         return out;
+    }
+
+    @Override
+    public String toString() {
+        return (ball == null?"o":deadZone == true?" ":"·");
     }
 }
