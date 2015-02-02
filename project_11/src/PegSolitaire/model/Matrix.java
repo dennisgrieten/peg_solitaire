@@ -9,6 +9,7 @@ public class Matrix {
     Hole[][] matrix = new Hole[7][7];
     Stack<Ball> stack = new java.util.Stack<Ball>();  // Stack voor verwijderde ballen
     byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
+    int pie;
 
     public Matrix() {
         initField();
