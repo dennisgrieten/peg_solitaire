@@ -1,10 +1,13 @@
 package PegSolitaire.model;
 
+import java.util.Stack;
+
 /**
  * Created by dennis on 28/01/15.
  */
 public class Matrix {
     Hole[][] matrix = new Hole[7][7];
+    Stack<Ball> stack = new java.util.Stack<Ball>();  // Stack voor verwijderde ballen
     byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
 
     public Matrix() {
@@ -31,7 +34,9 @@ public class Matrix {
     public String toString() {
         StringBuilder output = new StringBuilder();
 
+        output.append("#Peg Solitaire#\n  0 1 2 3 4 5 6\n");
         for (int i = 0; i < matrix.length; i++) {
+            output.append(i + " ");
             for (int j = 0; j < matrix[i].length; j++) {
                 output.append(matrix[i][j].toString()).append(" ");
             }
