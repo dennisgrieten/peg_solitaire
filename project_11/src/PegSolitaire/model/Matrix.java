@@ -1,14 +1,10 @@
 package PegSolitaire.model;
 
-import java.util.ArrayList;
-import java.util.Stack;
-
 /**
  * Created by dennis on 28/01/15.
  */
 public class Matrix {
     Hole[][] matrix = new Hole[7][7];
-    Stack<Ball> stack = new Stack<Ball>();  // Stack voor verwijderde ballen
     byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
 
     public Matrix() {
