@@ -35,11 +35,11 @@ public class Matrix {
     // Verplaats bal van één vak naar het ander opgegeven vak
     public void moveBall(int x, int y, int x1, int y1) {
         matrix[x1][y1].setBall(matrix[x][y].giveBall());
-        removeBall(calculateVector(x, y, x1, y1));
+        removeBall(calculateVector(x, y, x1, y1));          // Verwijder bal
     }
 
     private void removeBall(Coordinate c) {
-        stack.push(matrix[c.getX()][c.getY()].giveBall());
+        stack.push(matrix[c.getX()][c.getY()].giveBall());  // Verplaats bal van opgegeven vak naar de stack
     }
 
     // Bereken in welke richting de zet gedaan wordt om de juiste bal weg te nemen
