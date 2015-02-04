@@ -5,7 +5,7 @@ package PegSolitaire.model;
  */
 public class Hole {
     private Ball ball;
-    private Coordinate coordinate;
+    private Coordinate c;
     private boolean deadZone;   // Vlag voor dode hoeken
 
     public Hole(Ball ball, Coordinate c) {
