@@ -5,12 +5,12 @@ package PegSolitaire.model;
  */
 public class Hole {
     private Ball ball;
-    private Coordinate coordinate;
+    private Coordinate c;
     private boolean deadZone;   // Vlag voor dode hoeken
 
-    public Hole(Ball ball, Coordinate coordinate) {
+    public Hole(Ball ball, Coordinate c) {
         this.ball = ball;
-        this.coordinate = coordinate;
+        this.c = c;
         this.deadZone = false;
     }
 
