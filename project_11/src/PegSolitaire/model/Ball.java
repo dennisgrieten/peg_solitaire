@@ -7,5 +7,5 @@ import java.util.Stack;
  */
 public class Ball {
     // Stack voor de geschiedenis van 'x' en 'y' coördinaten
-    Stack<Coordinate> history = new Stack<Coordinate>();
+    private Stack<Coordinate> history = new Stack<Coordinate>();
 }

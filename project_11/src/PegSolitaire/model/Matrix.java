@@ -14,6 +14,7 @@ public class Matrix {
         initField();
     }
 
+    // Maak matrix aan
     private void initField() {
         for (byte i = 0; i < matrix.length; i++) {
             for (byte j = 0; j < matrix[i].length; j++) {
@@ -21,6 +22,7 @@ public class Matrix {
             }
         }
 
+        // Vlag onbruikbare velden
         for (byte i : deadZoneMap) {
             for (byte j : deadZoneMap) {
                 matrix[i][j].setDeadZone(true);
@@ -30,6 +32,7 @@ public class Matrix {
         matrix[3][3].clearBall();   // Delete middelste bal
     }
 
+    // Verplaats bal van één vak naar het ander opgegeven vak
     public void moveBall(int x, int y, int x1, int y1){
         matrix[x1][y1].setBall(matrix[x][y].giveBall());
         removeBall(calculateVector(x, y, x1, y1));
