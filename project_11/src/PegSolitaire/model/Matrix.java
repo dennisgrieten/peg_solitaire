@@ -39,6 +39,7 @@ public class Matrix {
         stack.push(matrix[c.getX()][c.getY()].giveBall());
     }
 
+    // Bereken in welke richting de zet gedaan wordt om de juiste bal weg te nemen
     private Coordinate calculateVector(int x, int y, int x1, int y1) {
         if (x == x1) {
             if (y < y1) {
