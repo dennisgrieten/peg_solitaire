@@ -4,19 +4,19 @@ package PegSolitaire.model;
  * Created by dennis on 28/01/15.
  */
 public class Coordinate {
-    private byte x;
-    private byte y;
+    private int x;
+    private int y;
 
-    public Coordinate(byte x, byte y) {
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public byte getX() {
+    public int getX() {
         return x;
     }
 
-    public byte getY() {
+    public int getY() {
         return y;
     }
 }
