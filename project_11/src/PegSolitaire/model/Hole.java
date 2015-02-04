@@ -8,9 +8,9 @@ public class Hole {
     private Coordinate coordinate;
     private boolean deadZone;   // Vlag voor dode hoeken
 
-    public Hole(Ball ball, Coordinate coordinate) {
+    public Hole(Ball ball, Coordinate c) {
         this.ball = ball;
-        this.coordinate = coordinate;
+        this.c = c;
         this.deadZone = false;
     }
 
@@ -33,9 +33,17 @@ public class Hole {
 
     // Overhandig de ball
     public Ball giveBall() {
-        Ball out = this.ball;
-        clearBall();
+        pushCoordinate();       // Zet Coordinaat van dit vak in geschiedenis van ball
+        Ball out = this.ball;   // Tijdelijke extra pointer naar ball
+        clearBall();            // Verwijder pointer naar de bal in dit vak
         return out;
+    }
+
+    // Coordinaat van dit vak plaatsen in bal geschiedenis
+    public void pushCoordinate() {
+        if (ball != null ) {
+            ball.pushCoordinate(this.coordinate);
+        }
     }
 
     @Override

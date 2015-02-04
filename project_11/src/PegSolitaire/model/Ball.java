@@ -8,4 +8,9 @@ import java.util.Stack;
 public class Ball {
     // Stack voor de geschiedenis van 'x' en 'y' coördinaten
     private Stack<Coordinate> history = new Stack<Coordinate>();
+
+    // Coördinaat op de history stack pushen
+    public void pushCoordinate(Coordinate c) {
+        history.push(c);
+    }
 }
