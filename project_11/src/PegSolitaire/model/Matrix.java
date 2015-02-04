@@ -42,6 +42,12 @@ public class Matrix {
         stack.push(matrix[c.getX()][c.getY()].giveBall());  // Verplaats bal van opgegeven vak naar de stack
     }
 
+    private void popBall() {
+        Ball b = stack.pop();
+        Coordinate c = b.popCoordinate();
+        matrix[c.getX()][c.getY()].setBall(b);
+    }
+
     // Bereken in welke richting de zet gedaan wordt om de juiste bal weg te nemen
     private Coordinate calculateVector(int x, int y, int x1, int y1) {
         if (x == x1) {

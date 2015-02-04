@@ -13,4 +13,8 @@ public class Ball {
     public void pushCoordinate(Coordinate c) {
         history.push(c);
     }
+
+    public Coordinate popCoordinate() {
+        return history.pop();
+    }
 }
