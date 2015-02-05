@@ -15,7 +15,7 @@ public class TestMatrix {
         int y, y1;
 
         while (true) {
-            System.out.println(field.toString());
+            System.out.println(spel.toString());
             System.out.print("Verplaats een bal\nx: ");
             x = input.nextInt();
             System.out.print("y: ");

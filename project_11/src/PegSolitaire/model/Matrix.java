@@ -52,10 +52,10 @@ public class Matrix {
     }*/
 
     public void undoField() {
-        if (stack.size() != 0) {
+        /*if (stack.size() != 0) {
             Coordinate c = resetBall(popBall());
             resetBall(getKiller(c));
-        }
+        }*/
     }
 
     /*public Ball getKiller(Coordinate c) {

@@ -17,4 +17,9 @@ public class Controller {
     public void undoMove() {
         // Nog te implementeren
     }
+
+    @Override
+    public String toString() {
+        return matrix.toString();
+    }
 }
