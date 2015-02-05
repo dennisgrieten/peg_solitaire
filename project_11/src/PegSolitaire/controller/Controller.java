@@ -14,9 +14,9 @@ public class Controller {
     }
 
     /* Maak een zet ongedaan */
-    public void undoMove() {
+    /*public void undoMove() {
         // Nog te implementeren
-    }
+    }*/
 
     @Override
     public String toString() {

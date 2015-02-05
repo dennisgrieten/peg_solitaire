@@ -51,12 +51,12 @@ public class Matrix {
         return c;
     }*/
 
-    public void undoField() {
-        /*if (stack.size() != 0) {
+    /*public void undoField() {
+        if (stack.size() != 0) {
             Coordinate c = resetBall(popBall());
             resetBall(getKiller(c));
-        }*/
-    }
+        }
+    }*/
 
     /*public Ball getKiller(Coordinate c) {
         *//**
