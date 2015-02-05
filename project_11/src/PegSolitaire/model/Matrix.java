@@ -14,7 +14,7 @@ public class Matrix {
         initField();
     }
 
-    // Maak matrix aan
+    /* Maak matrix aan */
     private void initField() {
         for (byte i = 0; i < matrix.length; i++) {
             for (byte j = 0; j < matrix[i].length; j++) {
@@ -22,7 +22,7 @@ public class Matrix {
             }
         }
 
-        // Vlag onbruikbare velden
+        /* Vlag onbruikbare velden */
         for (byte i : deadZoneMap) {
             for (byte j : deadZoneMap) {
                 matrix[i][j].setDeadZone(true);
@@ -32,24 +32,44 @@ public class Matrix {
         matrix[3][3].clearBall();   // Delete middelste bal
     }
 
-    // Verplaats bal van één vak naar het ander opgegeven vak
-    public void moveBall(int x, int y, int x1, int y1) {
-        matrix[x1][y1].setBall(matrix[x][y].giveBall());
-        removeBall(calculateVector(x, y, x1, y1));          // Verwijder bal
-    }
-
-    private void removeBall(Coordinate c) {
+    private void pushBall(Coordinate c) {
         stack.push(matrix[c.getX()][c.getY()].giveBall());  // Verplaats bal van opgegeven vak naar de stack
     }
 
-    private void popBall() {
-        Ball b = stack.pop();
-        Coordinate c = b.popCoordinate();
-        matrix[c.getX()][c.getY()].setBall(b);
+    private Ball popBall() {
+        return stack.pop();         // Pop bal van de stack
     }
 
-    // Bereken in welke richting de zet gedaan wordt om de juiste bal weg te nemen
-    private Coordinate calculateVector(int x, int y, int x1, int y1) {
+    public void moveBall(int x, int y, int x1, int y1) {
+        matrix[x1][y1].setBall(matrix[x][y].giveBall());    // Overhandig bal van één vak naar het ander
+        pushBall(getVector(x, y, x1, y1));                  // Verwijder bal
+    }
+
+    private Coordinate resetBall(Ball b) {
+        Coordinate c = b.popCoordinate();                   // Pop coördinaat van bal geschiedenis in tijdelijke pointer
+        matrix[c.getX()][c.getY()].setBall(b);              // Zet bal terug op het veld met oude coördinaten
+        return c;
+    }
+
+    public void undoField() {
+        if (stack.size != 0) {
+            Coordinate c = resetBall(popBall());
+            resetBall(getKiller(c));
+        }
+    }
+
+    public Ball getKiller(Coordinate c) {
+        /**
+         * Nog te implementeren.
+         * Hier zal een List komen van de naburige velden die een bal bevatten, die vervolgens gesorteerd zullen worden
+         * op basis van de groote van de geschiedenisstack van de ballen die ze bevatten a.d.h.v. de compare methode
+         * in de klasse Hole.
+         */
+        return b;
+    }
+
+    /* Bereken in welke richting de zet gedaan werd om de juiste bal weg te nemen */
+    private Coordinate getVector(int x, int y, int x1, int y1) {
         if (x == x1) {
             if (y < y1) {
                 return new Coordinate(x, y + 1);

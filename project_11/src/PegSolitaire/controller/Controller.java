@@ -7,4 +7,14 @@ import PegSolitaire.model.Matrix;
  */
 public class Controller {
     private Matrix matrix;
+
+    /* Doe een zet */
+    public void doMove(int x0, int y0, int x1, int y1) {
+        matrix.moveBall(x0, y0, x1, y1);
+    }
+
+    /* Maak een zet ongedaan */
+    public void undoMove() {
+        // Nog te implementeren
+    }
 }

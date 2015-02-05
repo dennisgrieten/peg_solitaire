@@ -3,7 +3,7 @@ package PegSolitaire.model;
 /**
  * Created by dennis on 28/01/15.
  */
-public class Hole {
+public class Hole implements Comparable<Hole> {
     private Ball ball;
     private Coordinate coordinate;
     private boolean deadZone;   // Vlag voor dode hoeken
@@ -28,10 +28,10 @@ public class Hole {
     }
 
     public void clearBall() {
-        this.ball = null;   // Wis pointer van bal in dit vak
+        this.ball = null;       // Wis pointer van bal in dit vak
     }
 
-    // Overhandig de ball
+    /* Overhandig de ball */
     public Ball giveBall() {
         pushCoordinate();       // Zet Coordinaat van dit vak in geschiedenis van ball
         Ball out = this.ball;   // Tijdelijke extra pointer naar ball
@@ -39,11 +39,20 @@ public class Hole {
         return out;
     }
 
-    // Coordinaat van dit vak plaatsen in bal geschiedenis
+    /* Coordinaat van dit vak plaatsen in de bal geschiedenis */
     public void pushCoordinate() {
         if (ball != null ) {
             ball.pushCoordinate(this.coordinate);
         }
+    }
+
+    @Override
+    public int compareTo(Hole o) {
+        /*
+        * Nog te implementeren.
+        * Comparen van 2 vakken op basis van de stack-grootte van de ballen die ze bevatten.
+        */
+        return 0;
     }
 
     @Override
