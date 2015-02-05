@@ -1,5 +1,7 @@
 package PegSolitaire.model;
 
+import PegSolitaire.controller.Controller;
+
 import java.util.Scanner;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Scanner;
  */
 public class TestMatrix {
     public static void main(String[] args) {
-        Matrix field = new Matrix();
+        Controller spel = new Controller();
         Scanner input = new Scanner(System.in);
         int x, x1;
         int y, y1;
@@ -22,7 +24,7 @@ public class TestMatrix {
             x1 = input.nextInt();
             System.out.print("y: ");
             y1 = input.nextInt();
-            field.moveBall(x, y, x1, y1);
+            spel.doMove(x, y, x1, y1);
             System.out.println("\n");
         }
 
