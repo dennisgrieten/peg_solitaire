@@ -3,7 +3,7 @@ package PegSolitaire.model;
 /**
  * Created by dennis on 28/01/15.
  */
-public class Hole implements Comparable<Hole> {
+public class Hole implements Comparable<Hole>, Selectable {
     private Ball ball;
     private Coordinate coordinate;
     private boolean deadZone;   // Vlag voor dode hoeken
