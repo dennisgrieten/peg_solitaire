@@ -45,28 +45,28 @@ public class Matrix {
         pushBall(getVector(x, y, x1, y1));                  // Verwijder bal
     }
 
-    private Coordinate resetBall(Ball b) {
+    /*private Coordinate resetBall(Ball b) {
         Coordinate c = b.popCoordinate();                   // Pop coördinaat van bal geschiedenis in tijdelijke pointer
         matrix[c.getX()][c.getY()].setBall(b);              // Zet bal terug op het veld met oude coördinaten
         return c;
-    }
+    }*/
 
     public void undoField() {
-        if (stack.size != 0) {
+        if (stack.size() != 0) {
             Coordinate c = resetBall(popBall());
             resetBall(getKiller(c));
         }
     }
 
-    public Ball getKiller(Coordinate c) {
-        /**
+    /*public Ball getKiller(Coordinate c) {
+        *//**
          * Nog te implementeren.
          * Hier zal een List komen van de naburige velden die een bal bevatten, die vervolgens gesorteerd zullen worden
          * op basis van de groote van de geschiedenisstack van de ballen die ze bevatten a.d.h.v. de compare methode
          * in de klasse Hole.
-         */
+         *//*
         return b;
-    }
+    }*/
 
     /* Bereken in welke richting de zet gedaan werd om de juiste bal weg te nemen */
     private Coordinate getVector(int x, int y, int x1, int y1) {
