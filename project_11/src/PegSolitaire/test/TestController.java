@@ -1,4 +1,4 @@
-package PegSolitaire.model;
+package PegSolitaire.test;
 
 import PegSolitaire.controller.Controller;
 
@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * Created by dennis on 29/01/15.
  */
-public class TestMatrix {
+public class TestController {
     public static void main(String[] args) {
         Controller spel = new Controller();
         Scanner input = new Scanner(System.in);
@@ -27,6 +27,5 @@ public class TestMatrix {
             spel.doMove(x, y, x1, y1);
             System.out.println("\n");
         }
-
     }
 }
