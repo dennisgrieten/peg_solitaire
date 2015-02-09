@@ -48,6 +48,7 @@ public class Hole implements Comparable<Hole>, Selectable {
 
     @Override
     public boolean selectable() {
+
         return false;
     }
 

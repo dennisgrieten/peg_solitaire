@@ -5,12 +5,12 @@ import java.util.Stack;
 /**
  * Created by dennis on 28/01/15.
  */
-public class Matrix {
+public class Field {
     private Hole[][] matrix = new Hole[7][7];
     private Stack<Ball> stack = new java.util.Stack<Ball>();  // Stack voor verwijderde ballen
     private byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
 
-    public Matrix() {
+    public Field() {
         initField();
     }
 
@@ -30,6 +30,14 @@ public class Matrix {
         }
 
         matrix[3][3].clearBall();   // Delete middelste bal
+    }
+
+    public int getDimensionX() {
+        return matrix[0].length;
+    }
+
+    public int getDimensionY() {
+        return matrix.length;
     }
 
     private void pushBall(Coordinate c) {
