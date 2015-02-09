@@ -2,30 +2,38 @@ package PegSolitaire.test;
 
 import PegSolitaire.controller.Controller;
 
-import java.util.Scanner;
-
 /**
  * Created by dennis on 29/01/15.
  */
 public class TestController {
     public static void main(String[] args) {
         Controller spel = new Controller();
-        Scanner input = new Scanner(System.in);
-        int x, x1;
-        int y, y1;
 
-        while (true) {
-            System.out.println(spel.toString());
-            System.out.print("Verplaats een bal\nx: ");
-            x = input.nextInt();
-            System.out.print("y: ");
-            y = input.nextInt();
-            System.out.print("Naar\nx: ");
-            x1 = input.nextInt();
-            System.out.print("y: ");
-            y1 = input.nextInt();
-            spel.doMove(x, y, x1, y1);
-            System.out.println("\n");
-        }
+        System.out.println(spel.toString());
+        System.out.print("Verplaats bal\n" +
+                "x: 5\n" +
+                "y: 3\n" +
+                "->\n" +
+                "x: 3\n" +
+                "y: 3\n\n");
+        spel.doMove(5, 3, 3, 3);
+        System.out.println(spel.toString());
+
+        System.out.print("Verplaats bal\n" +
+                "x: 4\n" +
+                "y: 1\n" +
+                "->\n" +
+                "x: 4\n" +
+                "y: 3\n\n");
+        spel.doMove(4, 1, 4, 3);
+        System.out.println(spel.toString());
+
+        System.out.println("Maak zet ongedaan");
+        spel.undoMove();
+        System.out.println(spel.toString());
+
+        System.out.println("Maak zet nog eens ongedaan");
+        spel.undoMove();
+        System.out.println(spel.toString());
     }
 }

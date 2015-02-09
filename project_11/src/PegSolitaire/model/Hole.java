@@ -3,11 +3,11 @@ package PegSolitaire.model;
 /**
  * Created by dennis on 28/01/15.
  */
-public class Hole implements Comparable<Hole>, Selectable {
+public class Hole {
     private Field parent;
     private Ball ball;
     private Coordinate coordinate;
-    private boolean deadZone;   // Vlag voor dode hoeken
+    private boolean deadZone;   // Vlag voor dode Vakken
 
     public Hole(Ball ball, Coordinate c, Field f) {
         this.ball = ball;
@@ -29,12 +29,16 @@ public class Hole implements Comparable<Hole>, Selectable {
         return true;
     }
 
-    public void setBall(Ball bal) {
-        this.ball = bal;
+    public boolean isDeadZone() {
+        return this.deadZone;
     }
 
     public void setDeadZone(boolean deadZone){
         this.deadZone = deadZone;
+    }
+
+    public void setBall(Ball bal) {
+        this.ball = bal;
     }
 
     public void clearBall() {
@@ -43,10 +47,14 @@ public class Hole implements Comparable<Hole>, Selectable {
 
     /* Overhandig de ball */
     public Ball giveBall() {
-        pushCoordinate();       // Zet Coordinaat van dit vak in geschiedenis van ball
         Ball out = this.ball;   // Tijdelijke extra pointer naar ball
         clearBall();            // Verwijder pointer naar de bal in dit vak
         return out;
+    }
+
+    public Ball giveBall(boolean toStack) {
+        pushCoordinate();       // Zet Coordinaat van dit vak in geschiedenis van ball
+        return this.giveBall();
     }
 
     /* Coordinaat van dit vak plaatsen in de bal geschiedenis */
@@ -54,26 +62,6 @@ public class Hole implements Comparable<Hole>, Selectable {
         if (ball != null ) {
             ball.pushCoordinate(this.coordinate);
         }
-    }
-
-    @Override
-    public boolean selectable() {
-
-        return false;
-    }
-
-    @Override
-    public boolean selectable(boolean emptyField) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(Hole o) {
-        /*
-        * Nog te implementeren.
-        * Comparen van 2 vakken op basis van de stack-grootte van de ballen die ze bevatten.
-        */
-        return 0;
     }
 
     @Override

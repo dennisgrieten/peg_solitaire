@@ -1,0 +1,11 @@
+10/02/2015
+----------
+Er is een hoop verandert.
+
+Een zet ongedaan maken gebeurt nu als volgt:
+    Stack pop -> ball.history.pop() -> terugzetten,
+    killer bal word terug gezet op basis van de opgeslagen stappen in het nieuwe attribuut "moveHistory", in klasse Field, van het type stack.
+    in moveHistory word altijd in paren de begin -en eindcoördinaat geplaatst; één zet = 2 coördinaten pushen op stack.
+
+Er moet nog steeds gecontrolleerd worden of een zet legaal is, heb daar al een extra methode "inField(int x, int y)" voor aangemaakt.
+"inField" controlleerd of de opgegeven coördinaat zich niet buiten het veld of op de dode zone bevindt -> true.
