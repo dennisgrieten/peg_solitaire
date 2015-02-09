@@ -6,11 +6,12 @@ import java.util.Stack;
  * Created by dennis on 28/01/15.
  */
 public class Field {
-    private Hole[][] matrix = new Hole[7][7];
+    private Hole[][] matrix;
     private Stack<Ball> stack = new java.util.Stack<Ball>();  // Stack voor verwijderde ballen
     private byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
 
-    public Field() {
+    public Field(int dimensionX, int dimensionY) {
+        matrix = new Hole[dimensionY][dimensionX];
         initField();
     }
 

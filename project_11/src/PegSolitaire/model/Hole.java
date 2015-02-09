@@ -19,6 +19,14 @@ public class Hole implements Comparable<Hole>, Selectable {
         this.deadZone = deadZone;
     }
 
+    public boolean hasBall() {
+        if (ball == null) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void setBall(Ball bal) {
         this.ball = bal;
     }
