@@ -47,6 +47,16 @@ public class Hole implements Comparable<Hole>, Selectable {
     }
 
     @Override
+    public boolean selectable() {
+        return false;
+    }
+
+    @Override
+    public boolean selectable(boolean emptyField) {
+        return false;
+    }
+
+    @Override
     public int compareTo(Hole o) {
         /*
         * Nog te implementeren.
