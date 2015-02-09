@@ -19,7 +19,7 @@ public class Field {
     private void initField() {
         for (byte i = 0; i < matrix.length; i++) {
             for (byte j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = new Hole(new Ball(), new Coordinate(i,j));
+                matrix[i][j] = new Hole(new Ball(), new Coordinate(i,j), this);
             }
         }
 
