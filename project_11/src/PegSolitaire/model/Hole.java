@@ -4,14 +4,16 @@ package PegSolitaire.model;
  * Created by dennis on 28/01/15.
  */
 public class Hole implements Comparable<Hole>, Selectable {
+    private Field parent;
     private Ball ball;
     private Coordinate coordinate;
     private boolean deadZone;   // Vlag voor dode hoeken
 
-    public Hole(Ball ball, Coordinate c) {
+    public Hole(Ball ball, Coordinate c, Field f) {
         this.ball = ball;
         this.coordinate = c;
         this.deadZone = false;
+        parent = f;
     }
 
     public Hole(Ball ball, boolean deadZone) {
