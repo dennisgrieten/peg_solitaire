@@ -57,7 +57,7 @@ public class Field {
     }
 
     private void resetBall(Ball b) {
-        Coordinate c = b.popCoordinate();                   // Pop coördinaat van bal geschiedenis in tijdelijke pointer
+        Coordinate c = b.popHistory();                   // Pop coördinaat van bal geschiedenis in tijdelijke pointer
         matrix[c.x()][c.y()].setBall(b);              // Zet bal terug op het veld met oude coördinaten
     }
 

@@ -60,7 +60,7 @@ public class Hole {
     /* Coordinaat van dit vak plaatsen in de bal geschiedenis */
     public void pushCoordinate() {
         if (ball != null ) {
-            ball.pushCoordinate(this.coordinate);
+            ball.pushHistory(this.coordinate);
         }
     }
 
