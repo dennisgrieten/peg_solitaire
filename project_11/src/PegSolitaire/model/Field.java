@@ -1,5 +1,8 @@
 package PegSolitaire.model;
 
+import PegSolitaire.exception.IllegalCoordinateException;
+import PegSolitaire.exception.IllegalMoveException;
+
 import java.util.Stack;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Stack;
  */
 public class Field {
     private Hole[][] matrix;
-    private Stack<Ball> stack = new Stack<Ball>();  // Stack voor verwijderde ballen
+    private Stack<Ball> stack = new Stack<Ball>();                  // Stack voor verwijderde ballen
     private Stack<Coordinate> moveHistory = new Stack<Coordinate>();
     private byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
 
@@ -31,19 +34,22 @@ public class Field {
             }
         }
 
-        matrix[3][3].clearBall();   // Delete middelste bal
+        matrix[3][3].clearBall();           // Delete middelste bal
     }
 
-    private void pushBall(Coordinate c) {
-        stack.push(matrix[c.x()][c.y()].giveBall(true));  // Verplaats bal van opgegeven vak naar de stack
-    }
-
-    public void moveBall(int x, int y, int x1, int y1) {
-        if (inField(x, y) || inField(x1, y1)) {
-            matrix[x1][y1].setBall(matrix[x][y].giveBall());    // Overhandig bal van één vak naar het ander
-            pushBall(getVector(x, y, x1, y1));                  // Verwijder bal
-            moveHistory.push(new Coordinate(x, y));             // Plaats coörrdinaat zet beginvak in geschiedenis
-            moveHistory.push(new Coordinate(x1, y1));           // Plaats coördinaat zet eindvak in geschiedinis
+    public void doMove(int x, int y, int x1, int y1) throws IllegalCoordinateException, IllegalMoveException {
+        try {
+            if (inField(x, y) || inField(x1, y1)) {
+                if (isLegalMove(x, y, x1, y1)) {
+                    moveBall(x, y, x1, y1);
+                } else {
+                    throw new IllegalMoveException("Illegale zet");
+                }
+            } else {
+                throw new IllegalCoordinateException("Ongeldige coördinaten (dode zone)");
+            }
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalCoordinateException("Ongeldige coördinaten (buiten veld)");
         }
     }
 
@@ -56,14 +62,59 @@ public class Field {
         }
     }
 
-    private void resetBall(Ball b) {
-        Coordinate c = b.popHistory();                   // Pop coördinaat van bal geschiedenis in tijdelijke pointer
-        matrix[c.x()][c.y()].setBall(b);              // Zet bal terug op het veld met oude coördinaten
+    private void pushBall(Coordinate c) {
+        stack.push(matrix[c.x()][c.y()].giveBall(true));        // Verplaats bal van opgegeven vak naar de stack
     }
 
-    /* Controlleer of de gegeven coördinaten in het veld en buiten de dode zone liggen */
+    private void moveBall(int x, int y, int x1, int y1) {
+        matrix[x1][y1].setBall(matrix[x][y].giveBall());        // Overhandig bal van één vak naar het ander
+        pushBall(getVector(x, y, x1, y1));                      // Verwijder bal
+        moveHistory.push(new Coordinate(x, y));                 // Plaats coördinaat zet beginvak in geschiedenis
+        moveHistory.push(new Coordinate(x1, y1));               // Plaats coördinaat zet eindvak in geschiedinis
+    }
+
+    private void resetBall(Ball b) {
+        Coordinate c = b.popHistory();      // Pop coördinaat van bal geschiedenis in tijdelijke pointer
+        matrix[c.x()][c.y()].setBall(b);    // Zet bal terug op het veld met oude coördinaten
+    }
+
+    /* Controleer of de gegeven coördinaten in het veld en buiten de dode zone liggen */
     private boolean inField(int x, int y) {
-        return x <= matrix[y].length ? (matrix[y][x].isDeadZone() ? false : true) : false;
+        return x <= matrix.length && y <= matrix[x].length && x > 0 && y > 0 ? (matrix[y][x].isDeadZone() ? false : true) : false;
+    }
+
+    /* Controleer of de gegeven coördinaten geldig zijn voor een zet */
+    private boolean isLegalMove(int x, int y, int x1, int y1) {
+        boolean b = false;
+
+        if (matrix[x1][y1].hasBall()) {     // Controleer of (x1,y1) geen bal bevat
+            return false;
+        }
+
+        if (x != x1 && y != y1) {           // Controleer of de vector diagonaal is
+            return false;
+        }
+
+        if (x == x1) {                      // Als vector op x-as ligt
+            if (y > y1) {                   // Controleer of maar één vak tussen de coördinaten ligt
+                b |= (y - y1 == 2);         //
+            } else {                        //
+                b |= (y1 - y == 2);         //
+            }
+        } else if (y == y1) {               // Als vector op y-as ligt
+            if (x > x1) {                   // Controleer of maar één vak tussen de coördinaten ligt
+                b |= (x - x1 == 2);         //
+            } else {                        //
+                b |= (x1 - x == 2);         //
+            }
+        }
+
+        if (b) {
+            Coordinate c = getVector(x, y, x1, y1);             // Haal veld tussen (x,y) en (x1,y1)
+            return matrix[c.x()][c.y()].hasBall();              // Controleer of dit veld een bal heeft
+        }
+
+        return b;
     }
 
     /* Bereken in welke richting de zet gedaan werd om de juiste bal weg te nemen */

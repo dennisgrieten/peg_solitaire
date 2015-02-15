@@ -1,5 +1,7 @@
 package PegSolitaire.controller;
 
+import PegSolitaire.exception.IllegalCoordinateException;
+import PegSolitaire.exception.IllegalMoveException;
 import PegSolitaire.model.Field;
 import java.lang.String;
 
@@ -10,8 +12,14 @@ public class Controller {
     private Field field = new Field(7, 7);
 
     /* Doe een zet */
-    public void doMove(int x0, int y0, int x1, int y1) {
-        field.moveBall(x0, y0, x1, y1);
+    public void doMove(int x, int y, int x1, int y1) {
+        try {
+            field.doMove(x, y, x1, y1);
+        } catch (IllegalCoordinateException e) {
+            System.out.println(e.getMessage());
+        } catch (IllegalMoveException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /* Maak een zet ongedaan */
