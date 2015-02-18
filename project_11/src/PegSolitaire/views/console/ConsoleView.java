@@ -13,10 +13,8 @@ import java.util.Scanner;
  */
 public class ConsoleView {
     private Game game;
-    private boolean quit = false;
     private Scanner kb = new Scanner(System.in);
     private HashMap<Integer, String> menuItems = new HashMap<Integer, String>();
-
 
     public ConsoleView(Game c) {
         this.game = c;
@@ -126,7 +124,6 @@ public class ConsoleView {
                     System.out.println(e.getMessage() + "\n");
                 }
             }
-
         } while (!exit);
     }
 }
