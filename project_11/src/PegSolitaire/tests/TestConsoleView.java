@@ -6,7 +6,7 @@ import PegSolitaire.views.console.ConsoleView;
 /**
  * Created by dennis on 18/02/15.
  */
-public class ConsoleViewTest {
+public class TestConsoleView {
     public static void main(String[] args) {
         Game pegSolitaire = new Game();
         ConsoleView view = new ConsoleView(pegSolitaire);
