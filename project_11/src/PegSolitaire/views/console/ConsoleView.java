@@ -95,19 +95,19 @@ public class ConsoleView {
 
         do {
             System.out.println(game.printField());
-            System.out.println("Plot a move");
+            System.out.print("Plot a move\n");
 
             try {
                 System.out.print("x: ");
                 x = kb.nextInt();
                 System.out.print("y: ");
                 y = kb.nextInt();
-                System.out.println("move to");
+                System.out.print("move to\n");
                 System.out.print("x: ");
                 x1 = kb.nextInt();
                 System.out.print("y: ");
                 y1 = kb.nextInt();
-                System.out.println();
+                System.out.print("\n");
                 valid = true;
             } catch (InputMismatchException e) {
                 break;
@@ -116,6 +116,7 @@ public class ConsoleView {
             if (valid) {
                 try {
                     game.doMove(x, y, x1, y1);
+                    valid = false;
 
                     if (game.isEndgame()) {
                         System.out.println("You've unlocked the secret to the universe!\nWell done!");
