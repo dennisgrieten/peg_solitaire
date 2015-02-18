@@ -11,6 +11,7 @@ public class TestExceptions {
     public static void main(String[] args) {
         Game spel = new Game();
 
+        System.out.println("### Exceptions Test ###");
         System.out.println("\n" + spel.printField());
 
         /* (5,3) -> (3,3) */

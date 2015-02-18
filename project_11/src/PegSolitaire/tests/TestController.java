@@ -11,8 +11,10 @@ public class TestController {
     public static void main(String[] args) {
         Game spel = new Game();
 
-        /* (5,3) -> (3,3) */
+
+        System.out.println("### Controller Test ###");
         System.out.println(spel.printField());
+        /* (5,3) -> (3,3) */
         System.out.print("Verplaats bal:\n" +
                         "(5,3) -> (3,3)\n\n"
         );

@@ -18,6 +18,7 @@ public class TestEndGame {
         boolean exit = false;
 
         do {
+            System.out.println("### Endgame Test ###");
             System.out.println(game.printField());
             System.out.print("Plot a moves\n\n");
 
