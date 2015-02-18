@@ -1,4 +1,4 @@
-package PegSolitaire.exception;
+package PegSolitaire.exceptions;
 
 /**
  * Created by dennis on 15/02/15.

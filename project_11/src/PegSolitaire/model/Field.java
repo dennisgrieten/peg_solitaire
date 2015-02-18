@@ -1,7 +1,7 @@
 package PegSolitaire.model;
 
-import PegSolitaire.exception.IllegalCoordinateException;
-import PegSolitaire.exception.IllegalMoveException;
+import PegSolitaire.exceptions.IllegalCoordinateException;
+import PegSolitaire.exceptions.IllegalMoveException;
 
 import java.util.Stack;
 
@@ -42,6 +42,7 @@ public class Field {
             if (inField(x, y) || inField(x1, y1)) {
                 if (isLegalMove(x, y, x1, y1)) {
                     moveBall(x, y, x1, y1);
+
                 } else {
                     throw new IllegalMoveException("Illegale zet");
                 }
@@ -68,7 +69,7 @@ public class Field {
 
     private void moveBall(int x, int y, int x1, int y1) {
         matrix[x1][y1].setBall(matrix[x][y].giveBall());        // Overhandig bal van één vak naar het ander
-        pushBall(getVector(x, y, x1, y1));                      // Verwijder bal
+        pushBall(getVictim(x, y, x1, y1));                      // Verwijder bal
         moveHistory.push(new Coordinate(x, y));                 // Plaats coördinaat zet beginvak in geschiedenis
         moveHistory.push(new Coordinate(x1, y1));               // Plaats coördinaat zet eindvak in geschiedinis
     }
@@ -80,7 +81,8 @@ public class Field {
 
     /* Controleer of de gegeven coördinaten in het veld en buiten de dode zone liggen */
     private boolean inField(int x, int y) {
-        return x <= matrix.length && y <= matrix[x].length && x > 0 && y > 0 ? (matrix[y][x].isDeadZone() ? false : true) : false;
+        return x <= matrix.length && y <= matrix[x].length && x > 0 && y > 0 ?
+                (matrix[y][x].isDeadZone() ? false : true) : false;
     }
 
     /* Controleer of de gegeven coördinaten geldig zijn voor een zet */
@@ -110,7 +112,7 @@ public class Field {
         }
 
         if (b) {
-            Coordinate c = getVector(x, y, x1, y1);             // Haal veld tussen (x,y) en (x1,y1)
+            Coordinate c = getVictim(x, y, x1, y1);             // Haal veld tussen (x,y) en (x1,y1)
             return matrix[c.x()][c.y()].hasBall();              // Controleer of dit veld een bal heeft
         }
 
@@ -118,7 +120,7 @@ public class Field {
     }
 
     /* Bereken in welke richting de zet gedaan werd om de juiste bal weg te nemen */
-    private Coordinate getVector(int x, int y, int x1, int y1) {
+    private Coordinate getVictim(int x, int y, int x1, int y1) {
         if (x == x1) {
             if (y < y1) {
                 return new Coordinate(x, y + 1);

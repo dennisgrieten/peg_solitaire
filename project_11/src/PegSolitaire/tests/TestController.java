@@ -1,4 +1,4 @@
-package PegSolitaire.test;
+package PegSolitaire.tests;
 
 import PegSolitaire.controller.Controller;
 
@@ -11,26 +11,19 @@ public class TestController {
 
         /* (5,3) -> (3,3) */
         System.out.println(spel.toString());
-        System.out.print("Verplaats bal\n" +
-                        "x: 5\ny: 3\n->\n" +
-                        "x: 3\ny: 3\n\n"
+        System.out.print("Verplaats bal:\n" +
+                        "(5,3) -> (3,3)\n\n"
         );
         spel.doMove(5, 3, 3, 3);
         System.out.println(spel.toString());
 
         /* (4,1) -> (4,3)*/
-        System.out.print("Verplaats bal\n" +
-                        "x: 4\ny: 1\n->\n" +
-                        "x: 4\ny: 3\n\n"
+        System.out.print("Verplaats bal:\n" +
+                        "(4,1) -> (4,3)\n\n"
         );
         spel.doMove(4, 1, 4, 3);
         System.out.println(spel.toString());
 
-        /* (4,0) -> (4,2), Illegaal, spring over leeg veld */
-        System.out.print("Verplaats bal\n" +
-                        "x: 4\ny: 1\n->\n" +
-                        "x: 4\ny: 3\n\n"
-        );
         spel.doMove(4, 1, 4, 3);
         System.out.println(spel.toString());
 

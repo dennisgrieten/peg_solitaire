@@ -1,4 +1,4 @@
-package PegSolitaire.test;
+package PegSolitaire.tests;
 
 import PegSolitaire.controller.Controller;
 
