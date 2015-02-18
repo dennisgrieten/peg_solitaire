@@ -10,7 +10,7 @@ import java.util.Stack;
  */
 public class Field {
     private Hole[][] matrix;
-    private Stack<Ball> stack = new Stack<Ball>();                  // Stack voor verwijderde ballen
+    private Stack<Peg> stack = new Stack<Peg>();                  // Stack voor verwijderde ballen
     private Stack<Coordinate> moveHistory = new Stack<Coordinate>();
     private byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
 
@@ -23,7 +23,7 @@ public class Field {
     private void initField() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = new Hole(new Ball(), new Coordinate(i,j), this);
+                matrix[i][j] = new Hole(new Peg(), new Coordinate(i,j), this);
             }
         }
 
@@ -34,14 +34,14 @@ public class Field {
             }
         }
 
-        matrix[3][3].clearBall();           // Delete middelste bal
+        matrix[3][3].clearPeg();           // Delete middelste bal
     }
 
     public void doMove(int x, int y, int x1, int y1) throws IllegalCoordinateException, IllegalMoveException {
         try {
             if (inField(x, y) || inField(x1, y1)) {
                 if (isLegalMove(x, y, x1, y1)) {
-                    moveBall(x, y, x1, y1);
+                    movePeg(x, y, x1, y1);
 
                 } else {
                     throw new IllegalMoveException("Illegale zet");
@@ -56,27 +56,27 @@ public class Field {
 
     public void undoMove() {
         if (stack.size() != 0) {
-            resetBall(stack.pop());
+            resetPeg(stack.pop());
             Coordinate a =  moveHistory.pop();
             Coordinate b =  moveHistory.pop();
-            matrix[b.x()][b.y()].setBall(matrix[a.x()][a.y()].giveBall());
+            matrix[b.x()][b.y()].setPeg(matrix[a.x()][a.y()].givePeg());
         }
     }
 
-    private void pushBall(Coordinate c) {
-        stack.push(matrix[c.x()][c.y()].giveBall(true));        // Verplaats bal van opgegeven vak naar de stack
+    private void pushPeg(Coordinate c) {
+        stack.push(matrix[c.x()][c.y()].givePeg(true));        // Verplaats bal van opgegeven vak naar de stack
     }
 
-    private void moveBall(int x, int y, int x1, int y1) {
-        matrix[x1][y1].setBall(matrix[x][y].giveBall());        // Overhandig bal van één vak naar het ander
-        pushBall(getVictim(x, y, x1, y1));                      // Verwijder bal
+    private void movePeg(int x, int y, int x1, int y1) {
+        matrix[x1][y1].setPeg(matrix[x][y].givePeg());        // Overhandig bal van één vak naar het ander
+        pushPeg(getVictim(x, y, x1, y1));                      // Verwijder bal
         moveHistory.push(new Coordinate(x, y));                 // Plaats coördinaat zet beginvak in geschiedenis
         moveHistory.push(new Coordinate(x1, y1));               // Plaats coördinaat zet eindvak in geschiedinis
     }
 
-    private void resetBall(Ball b) {
-        Coordinate c = b.popHistory();      // Pop coördinaat van bal geschiedenis in tijdelijke pointer
-        matrix[c.x()][c.y()].setBall(b);    // Zet bal terug op het veld met oude coördinaten
+    private void resetPeg(Peg peg) {
+        Coordinate c = peg.popHistory();      // Pop coördinaat van bal geschiedenis in tijdelijke pointer
+        matrix[c.x()][c.y()].setPeg(peg);    // Zet bal terug op het veld met oude coördinaten
     }
 
     /* Controleer of de gegeven coördinaten in het veld en buiten de dode zone liggen */
@@ -89,7 +89,7 @@ public class Field {
     private boolean isLegalMove(int x, int y, int x1, int y1) {
         boolean b = false;
 
-        if (matrix[x1][y1].hasBall()) {     // Controleer of (x1,y1) geen bal bevat
+        if (matrix[x1][y1].hasPeg()) {     // Controleer of (x1,y1) geen bal bevat
             return false;
         }
 
@@ -113,7 +113,7 @@ public class Field {
 
         if (b) {
             Coordinate c = getVictim(x, y, x1, y1);             // Haal veld tussen (x,y) en (x1,y1)
-            return matrix[c.x()][c.y()].hasBall();              // Controleer of dit veld een bal heeft
+            return matrix[c.x()][c.y()].hasPeg();              // Controleer of dit veld een bal heeft
         }
 
         return b;

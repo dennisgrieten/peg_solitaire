@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * Created by dennis on 28/01/15.
  */
-public class Ball {
+public class Peg {
     private Coordinate history; //
 
     public void pushHistory(Coordinate c) {

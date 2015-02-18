@@ -27,11 +27,11 @@ public class TestController {
         spel.doMove(4, 1, 4, 3);
         System.out.println(spel.toString());
 
-        System.out.println("Maak zet ongedaan");
+        System.out.println("Maak zet ongedaan:");
         spel.undoMove();
         System.out.println(spel.toString());
 
-        System.out.println("Maak zet nog eens ongedaan");
+        System.out.println("Maak zet nog eens ongedaan:");
         spel.undoMove();
         System.out.println(spel.toString());
     }
