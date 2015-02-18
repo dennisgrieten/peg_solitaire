@@ -1,10 +1,33 @@
-10/02/2015
-----------
+18/02/2015 Dennis Grieten
+-------------------------
+Geïmplementeerd:
+    * Controle op geldige zet/input, met exceptions
+    * ConsoleView, om het spel te kunnen spelen
+    * Controle op gewonnen spel + test daarvoor
+
+Nog te impelementeren:
+    * GUIView (als laatste)
+    * Controle of er nog zetten mogelijk zijn (game over)
+    * Highscores
+    * Spel opslaan en terug kunnen hervatten
+    * ...
+
+Heb een paar attributen en methoden van naam gewijzigd zoals Ball -> Peg, Controller -> Game,...
+
+ConsoleView:
+    Voor de hand liggende navigatie, als je aan het spelen bent en je geeft iets anders dan een integer op dan kom je terug naar het menu (waar de optie "Resume game" staat).
+
+
+
+10/02/2015 Dennis Grieten
+-------------------------
 Heb de stack uit Ball verwijdert en er een Coordinate van gemaakt.
 Aangezien alle stappen worden bijgehouden in moveHistory moet er maar één keer een coördinaat in bal gezet worden, wanneer de bal op de stack gezet wordt.
 
-09/02/2015
-----------
+
+
+09/02/2015 Dennis Grieten
+-------------------------
 Er is een hoop verandert.
 
 Een zet ongedaan maken gebeurt nu als volgt:
