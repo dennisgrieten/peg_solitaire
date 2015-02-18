@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class ConsoleView {
     private Game game;
-    private Scanner kb = new Scanner(System.in);
+    private Scanner keyboard = new Scanner(System.in);
     private HashMap<Integer, String> menuItems = new HashMap<Integer, String>();
 
     public ConsoleView(Game c) {
@@ -44,7 +44,7 @@ public class ConsoleView {
                     startGame(true);
                     break;
                 default:
-                    System.out.println("Goodby !");
+                    System.out.println("Good bye!");
                     choice = 0;
             }
 
@@ -63,7 +63,7 @@ public class ConsoleView {
             }
 
             try {
-                choice = kb.nextInt();
+                choice = keyboard.nextInt();
                 if (choice > -1 && choice <= menuItems.size()) {
                     exit = true;
                 } else {
@@ -71,12 +71,12 @@ public class ConsoleView {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Not a valid choice!\n");
-                kb.nextLine();
+                keyboard.nextLine();
             }
 
         } while (!exit);
 
-        kb.nextLine();
+        keyboard.nextLine();
         return choice;
     }
 
@@ -97,17 +97,18 @@ public class ConsoleView {
 
             try {
                 System.out.print("x: ");
-                x = kb.nextInt();
+                x = keyboard.nextInt();
                 System.out.print("y: ");
-                y = kb.nextInt();
+                y = keyboard.nextInt();
                 System.out.print("move to\n");
                 System.out.print("x: ");
-                x1 = kb.nextInt();
+                x1 = keyboard.nextInt();
                 System.out.print("y: ");
-                y1 = kb.nextInt();
+                y1 = keyboard.nextInt();
                 System.out.print("\n");
                 valid = true;
             } catch (InputMismatchException e) {
+                keyboard.nextLine();
                 break;
             }
 

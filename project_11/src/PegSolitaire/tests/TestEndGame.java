@@ -20,7 +20,7 @@ public class TestEndGame {
         do {
             System.out.println("### Endgame Test ###");
             System.out.println(game.printField());
-            System.out.print("Plot a moves\n\n");
+            System.out.print("Plot moves\n\n");
 
             try {
                 game.doMove(1, 3, 3, 3);
