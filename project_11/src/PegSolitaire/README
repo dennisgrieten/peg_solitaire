@@ -7,9 +7,10 @@ Geïmplementeerd:
 
 Nog te impelementeren:
     * GUIView (als laatste)
+    * Spel resetten na endgame
     * Controle of er nog zetten mogelijk zijn (game over)
     * Highscores
-    * Spel opslaan en terug kunnen hervatten
+    * Spel opslaan en terug kunnen hervatten (json)
     * ...
 
 Heb een paar attributen en methoden van naam gewijzigd zoals Ball -> Peg, Controller -> Game,...
