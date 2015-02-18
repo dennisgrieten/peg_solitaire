@@ -84,7 +84,7 @@ public class ConsoleView {
         if (!resume) {
             game = new Game();
             menuItems.put(2, "Resume game");
-            System.out.println("##############################");
+            System.out.println("###############");
         }
 
         boolean exit = false;
