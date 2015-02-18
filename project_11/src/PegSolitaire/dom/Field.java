@@ -1,4 +1,4 @@
-package PegSolitaire.model;
+package PegSolitaire.dom;
 
 import PegSolitaire.exceptions.IllegalCoordinateException;
 import PegSolitaire.exceptions.IllegalMoveException;
@@ -10,7 +10,7 @@ import java.util.Stack;
  */
 public class Field {
     private Hole[][] matrix;
-    private Stack<Peg> stack = new Stack<Peg>();                  // Stack voor verwijderde ballen
+    private Stack<Peg> stack = new Stack<Peg>();        // Stack voor verwijderde ballen
     private Stack<Coordinate> moveHistory = new Stack<Coordinate>();
     private byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
 
@@ -34,7 +34,12 @@ public class Field {
             }
         }
 
-        matrix[3][3].clearPeg();           // Delete middelste bal
+        matrix[3][3].clearPeg();        // Delete middelste bal
+    }
+
+    /* Groote van de stack reflecteerd het aantal zetten. */
+    public int getMoveCount() {
+        return stack.size();
     }
 
     public void doMove(int x, int y, int x1, int y1) throws IllegalCoordinateException, IllegalMoveException {
@@ -44,16 +49,17 @@ public class Field {
                     movePeg(x, y, x1, y1);
 
                 } else {
-                    throw new IllegalMoveException("Illegale zet");
+                    throw new IllegalMoveException("Illegal move");
                 }
             } else {
-                throw new IllegalCoordinateException("Ongeldige coördinaten (dode zone)");
+                throw new IllegalCoordinateException("Invalid coordinates (dead zone)");
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalCoordinateException("Ongeldige coördinaten (buiten veld)");
+            throw new IllegalCoordinateException("Invalid coordinates (outside field)");
         }
     }
 
+    /* Maak de laatste zet ongedaan */
     public void undoMove() {
         if (stack.size() != 0) {
             resetPeg(stack.pop());
@@ -63,25 +69,26 @@ public class Field {
         }
     }
 
+    /* Verwijder bal en plaats op de stack */
     private void pushPeg(Coordinate c) {
-        stack.push(matrix[c.x()][c.y()].givePeg(true));        // Verplaats bal van opgegeven vak naar de stack
+        stack.push(matrix[c.x()][c.y()].givePeg(true));       // Verplaats bal van opgegeven vak naar de stack
     }
 
     private void movePeg(int x, int y, int x1, int y1) {
         matrix[x1][y1].setPeg(matrix[x][y].givePeg());        // Overhandig bal van één vak naar het ander
-        pushPeg(getVictim(x, y, x1, y1));                      // Verwijder bal
-        moveHistory.push(new Coordinate(x, y));                 // Plaats coördinaat zet beginvak in geschiedenis
-        moveHistory.push(new Coordinate(x1, y1));               // Plaats coördinaat zet eindvak in geschiedinis
+        pushPeg(getVictim(x, y, x1, y1));                     // Verwijder bal
+        moveHistory.push(new Coordinate(x, y));               // Plaats coördinaat zet beginvak in geschiedenis
+        moveHistory.push(new Coordinate(x1, y1));             // Plaats coördinaat zet eindvak in geschiedinis
     }
 
     private void resetPeg(Peg peg) {
-        Coordinate c = peg.popHistory();      // Pop coördinaat van bal geschiedenis in tijdelijke pointer
-        matrix[c.x()][c.y()].setPeg(peg);    // Zet bal terug op het veld met oude coördinaten
+        Coordinate c = peg.popHistory();        // Pop coördinaat van bal geschiedenis in tijdelijke pointer
+        matrix[c.x()][c.y()].setPeg(peg);       // Zet bal terug op het veld met oude coördinaten
     }
 
     /* Controleer of de gegeven coördinaten in het veld en buiten de dode zone liggen */
     private boolean inField(int x, int y) {
-        return x <= matrix.length && y <= matrix[x].length && x > 0 && y > 0 ?
+        return x <= matrix.length && y <= matrix[x].length && x >= 0 && y >= 0 ?
                 (matrix[y][x].isDeadZone() ? false : true) : false;
     }
 
@@ -89,7 +96,7 @@ public class Field {
     private boolean isLegalMove(int x, int y, int x1, int y1) {
         boolean b = false;
 
-        if (matrix[x1][y1].hasPeg()) {     // Controleer of (x1,y1) geen bal bevat
+        if (matrix[x1][y1].hasPeg()) {      // Controleer of (x1,y1) geen bal bevat
             return false;
         }
 
@@ -113,7 +120,7 @@ public class Field {
 
         if (b) {
             Coordinate c = getVictim(x, y, x1, y1);             // Haal veld tussen (x,y) en (x1,y1)
-            return matrix[c.x()][c.y()].hasPeg();              // Controleer of dit veld een bal heeft
+            return matrix[c.x()][c.y()].hasPeg();               // Controleer of dit veld een bal heeft
         }
 
         return b;

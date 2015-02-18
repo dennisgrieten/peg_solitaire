@@ -1,4 +1,4 @@
-package PegSolitaire.model;
+package PegSolitaire.dom;
 
 /**
  * Created by dennis on 28/01/15.

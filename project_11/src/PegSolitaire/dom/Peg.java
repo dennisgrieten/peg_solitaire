@@ -1,6 +1,4 @@
-package PegSolitaire.model;
-
-import java.util.Stack;
+package PegSolitaire.dom;
 
 /**
  * Created by dennis on 28/01/15.
