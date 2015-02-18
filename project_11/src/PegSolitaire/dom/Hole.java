@@ -66,6 +66,6 @@ public class Hole {
 
     @Override
     public String toString() {
-        return (peg == null?"○":deadZone == true?" ":"●");
+        return (peg == null?"○":deadZone == true?" ":"◉");      //●
     }
 }
