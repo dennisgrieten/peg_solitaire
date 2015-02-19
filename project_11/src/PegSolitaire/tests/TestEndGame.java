@@ -4,8 +4,6 @@ import PegSolitaire.controller.Game;
 import PegSolitaire.exceptions.IllegalCoordinateException;
 import PegSolitaire.exceptions.IllegalMoveException;
 
-import java.util.Scanner;
-
 /**
  * Created by dennis on 18/02/15.
  */
