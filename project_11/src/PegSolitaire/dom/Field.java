@@ -9,7 +9,7 @@ import java.util.Stack;
  */
 public class Field {
     private Hole[][] matrix;
-    private Stack<Peg> stack = new Stack<Peg>();        // Stack voor verwijderde ballen
+    private Stack<Peg> stack = new Stack<>();        // Stack voor verwijderde ballen
     private Stack<Coordinate> moveHistory = new Stack<Coordinate>();
     private byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
 

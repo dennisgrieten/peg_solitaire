@@ -16,8 +16,8 @@ public class ConsoleView {
     private Scanner keyboard = new Scanner(System.in);
     private HashMap<Integer, String> menuItems = new HashMap<Integer, String>();
 
-    public ConsoleView(Game c) {
-        this.game = c;
+    public ConsoleView(Game g) {
+        this.game = g;
         initMenuItems();
     }
 
@@ -82,7 +82,6 @@ public class ConsoleView {
 
     private void startGame(boolean resume) {
         if (!resume) {
-            game = new Game();
             menuItems.put(2, "Resume game");
             System.out.println("###############");
         }
@@ -116,7 +115,6 @@ public class ConsoleView {
 
                 if (game.isGameOver()) {
                     System.out.println("Game over!");
-
                     menuItems.remove(2);
                     exit = true;
                 }
