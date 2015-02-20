@@ -11,28 +11,38 @@ import java.lang.String;
 public class Game {
     private Field field;
     private boolean endGame;
+    private boolean gameOver;
 
     public Game() {
-        this.field = new Field(7, 7);
-        this.endGame = false;
+        initGame();
     }
 
-    /* Doe een zet */
-    public void doMove(int x, int y, int x1, int y1) throws IllegalCoordinateException, IllegalMoveException {
-        field.doMove(x, y, x1, y1);
-        checkEndGame();
+    private void initGame() {
+        this.field = new Field(7, 7);
+        this.gameOver = false;
+        this.endGame = false;
     }
 
     /**
      * Controleer of het spel gedaan is
      * Maximum aantal ballen - 1 zitten in de stack
      * of er kan geen zet meer gedaan worden (nog te implementeren!)
-    */
+     */
     private void checkEndGame() {
         if (field.getMoveCount() == 31) {
             endGame = true;
-            return;
         }
+    }
+
+    private void checkGameOver() {
+        gameOver = !field.hasSelectable();
+    }
+
+    /* Doe een zet */
+    public void doMove(int x, int y, int x1, int y1) throws IllegalCoordinateException, IllegalMoveException {
+        field.doMove(x, y, x1, y1);
+        checkGameOver();
+        checkEndGame();
     }
 
     /* Maak een zet ongedaan */
@@ -42,6 +52,10 @@ public class Game {
 
     public boolean isEndgame() {
         return endGame;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 
     public String printField() {

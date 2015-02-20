@@ -2,7 +2,6 @@ package PegSolitaire.dom;
 
 import PegSolitaire.exceptions.IllegalCoordinateException;
 import PegSolitaire.exceptions.IllegalMoveException;
-
 import java.util.Stack;
 
 /**
@@ -23,7 +22,7 @@ public class Field {
     private void initField() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = new Hole(new Peg(), new Coordinate(i,j), this);
+                matrix[i][j] = new Hole(new Peg(), new Coordinate(i, j), this);
             }
         }
 
@@ -31,6 +30,7 @@ public class Field {
         for (byte i : deadZoneMap) {
             for (byte j : deadZoneMap) {
                 matrix[i][j].setDeadZone(true);
+                matrix[i][j].clearPeg();
             }
         }
 
@@ -44,7 +44,7 @@ public class Field {
 
     public void doMove(int x, int y, int x1, int y1) throws IllegalCoordinateException, IllegalMoveException {
         try {
-            if (inField(x, y) || inField(x1, y1)) {
+            if (inField(x, y) && inField(x1, y1)) {
                 if (isLegalMove(x, y, x1, y1)) {
                     movePeg(x, y, x1, y1);
 
@@ -63,8 +63,8 @@ public class Field {
     public void undoMove() {
         if (stack.size() != 0) {
             resetPeg(stack.pop());
-            Coordinate a =  moveHistory.pop();
-            Coordinate b =  moveHistory.pop();
+            Coordinate a = moveHistory.pop();
+            Coordinate b = moveHistory.pop();
             matrix[b.x()][b.y()].setPeg(matrix[a.x()][a.y()].givePeg());
         }
     }
@@ -88,7 +88,7 @@ public class Field {
 
     /* Controleer of de gegeven coördinaten in het veld en buiten de dode zone liggen */
     private boolean inField(int x, int y) {
-        return x <= matrix.length && y <= matrix[x].length && x >= 0 && y >= 0 ?
+        return x < matrix.length && y < matrix[0].length && x >= 0 && y >= 0 ?
                 (matrix[y][x].isDeadZone() ? false : true) : false;
     }
 
@@ -141,6 +141,48 @@ public class Field {
                 return new Coordinate(x - 1, y);
             }
         }
+    }
+
+    /* Controleer of dit vak selecteerbaar is (met bal) a.d.h.v. naburige vakken */
+    public boolean selectable(int x, int y) {
+        if (!matrix[x][y].isDeadZone() && matrix[x][y].hasPeg()) {
+            if (inField(x, y - 2)) {        // Noord
+                if (!matrix[x][y - 2].hasPeg() && matrix[x][y - 1].hasPeg()) {
+                    return true;
+                }
+            }
+
+            if (inField(x, y + 2)) {        // Zuid
+                if (!matrix[x][y + 2].hasPeg() && matrix[x][y + 1].hasPeg()) {
+                    return true;
+                }
+            }
+
+            if (inField(x - 2, y)) {         // West
+                if (!matrix[x - 2][y].hasPeg() && matrix[x - 1][y].hasPeg()) {
+                    return true;
+                }
+            }
+
+            if (inField(x + 2, y)) {         // Oost
+                if (!matrix[x + 2][y].hasPeg() && matrix[x + 1][y].hasPeg()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /* Controleer of het veld nog speel opties bevat */
+    public boolean hasSelectable() {
+        for (int x = 0; x < matrix.length; x++) {
+            for (int y= 0; y < matrix[x].length; y++) {
+                if (selectable(x, y)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

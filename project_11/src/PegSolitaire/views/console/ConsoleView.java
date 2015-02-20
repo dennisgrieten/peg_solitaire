@@ -90,9 +90,9 @@ public class ConsoleView {
         boolean exit = false;
         boolean valid = false;
         int x = 0, y = 0, x1 = 0, y1 = 0;
+        System.out.println(game.printField());
 
         do {
-            System.out.println(game.printField());
             System.out.print("Plot a move\n");
 
             try {
@@ -106,25 +106,30 @@ public class ConsoleView {
                 System.out.print("y: ");
                 y1 = keyboard.nextInt();
                 System.out.print("\n");
-                valid = true;
             } catch (InputMismatchException e) {
                 keyboard.nextLine();
                 break;
             }
 
-            if (valid) {
-                try {
-                    game.doMove(x, y, x1, y1);
-                    valid = false;
+            try {
+                game.doMove(x, y, x1, y1);
 
-                    if (game.isEndgame()) {
-                        System.out.println("You've unlocked the secret to the universe!\nWell done!");
-                        exit = true;
-                    }
-                } catch (IllegalMoveException | IllegalCoordinateException e) {
-                    System.out.println(e.getMessage() + "\n");
+                if (game.isGameOver()) {
+                    System.out.println("Game over!");
+
+                    menuItems.remove(2);
+                    exit = true;
                 }
+
+                if (game.isEndgame()) {
+                    System.out.println("You've unlocked the secret to the universe!\nWell done!");
+                    exit = true;
+                }
+            } catch (IllegalMoveException | IllegalCoordinateException e) {
+                System.out.println(e.getMessage() + "\n");
             }
+
+            System.out.println(game.printField());
         } while (!exit);
     }
 }

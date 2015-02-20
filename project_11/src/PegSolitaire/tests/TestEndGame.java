@@ -9,6 +9,7 @@ import PegSolitaire.exceptions.IllegalMoveException;
  */
 public class TestEndGame {
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
         Game game = new Game();
         int[] c = {
                 1, 3, 3, 3,
@@ -74,12 +75,14 @@ public class TestEndGame {
                             "░░░░█░░░░░░░░░░░░░░░░░░░░░█░░\n" +
                             "░░░░▐▌▀▄░░░░░░░░░░░░░░░░░▐▌░░\n" +
                             "░░░░░█░░▀░░░░░░░░░░░░░░░░▀░░░\n" +
-                            "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+                            "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
                 }
 
             } catch (IllegalMoveException | IllegalCoordinateException e) {
                 System.out.println(e.getMessage() + "\n");
             }
         }
+        long endTime = System.currentTimeMillis();
+        System.out.printf("Runtime: %d ms", endTime - startTime);
     }
 }
