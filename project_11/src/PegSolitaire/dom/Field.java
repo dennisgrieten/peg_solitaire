@@ -27,8 +27,8 @@ public class Field {
         }
 
         /* Vlag onbruikbare velden */
-        for (byte i : deadZoneMap) {
-            for (byte j : deadZoneMap) {
+        for (int i : deadZoneMap) {
+            for (int j : deadZoneMap) {
                 matrix[i][j].setDeadZone(true);
                 matrix[i][j].clearPeg();
             }
@@ -110,15 +110,15 @@ public class Field {
 
         if (x == x1) {                  // Als vector op x-as ligt
             if (y > y1) {               // Controleer of er maar één vak tussen de coördinaten ligt
-                b |= (y - y1 == 2);     //
+                b = (y - y1 == 2);      //
             } else {                    //
-                b |= (y1 - y == 2);     //
+                b = (y1 - y == 2);      //
             }
         } else {                        // Als vector op y-as ligt
             if (x > x1) {               // Controleer of maar er één vak tussen de coördinaten ligt
-                b |= (x - x1 == 2);     //
+                b = (x - x1 == 2);      //
             } else {                    //
-                b |= (x1 - x == 2);     //
+                b = (x1 - x == 2);      //
             }
         }
 
@@ -177,7 +177,10 @@ public class Field {
         return false;
     }
 
-    /* Controleer of het veld nog speel opties bevat */
+    /**
+     * Controleer of het veld nog speel opties bevat
+     * Zal blijven itereren over het veld tot het een speeloptie vindt
+     */
     public boolean hasSelectable() {
         for (int x = 0; x < matrix.length; x++) {
             for (int y= 0; y < matrix[x].length; y++) {
