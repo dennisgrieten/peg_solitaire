@@ -2,9 +2,9 @@
 -------------------------
 Geïmplementeerd:
     * Controle op game over + TestGameOver
-    * TestRandomComputer (bracht grote bug naar boven)
-        -> was mogelijk om van dood vak naar leeg vak te verplaatsen
-    *
+    * TestRandomComputer (bracht grote bugs naar boven)
+        -> was mogelijk om van dood vak naar leeg vak te springen, over een vol vak
+        -> was mogelijk om van leeg vak naar leeg vak te springen, over een vol vak
 
 Nog te impelementeren:
     * GUIView (als laatste)
@@ -12,6 +12,7 @@ Nog te impelementeren:
     * Highscores
     * Spel opslaan en terug kunnen hervatten (json)
     * ...
+
 
 18/02/2015 Dennis Grieten
 -------------------------

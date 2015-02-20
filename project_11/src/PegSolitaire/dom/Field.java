@@ -96,31 +96,35 @@ public class Field {
     private boolean isLegalMove(int x, int y, int x1, int y1) {
         boolean b = false;
 
-        if (matrix[x1][y1].hasPeg()) {      // Controleer of (x1,y1) geen bal bevat
+        if (matrix[x1][y1].hasPeg()) {  // Controleer of (x1,y1) geen bal bevat
             return false;
         }
 
-        if (x != x1 && y != y1) {           // Controleer of de vector diagonaal is
+        if (!matrix[x][y].hasPeg()) {   // Controleer of (x,y) een bal bevat
             return false;
         }
 
-        if (x == x1) {                      // Als vector op x-as ligt
-            if (y > y1) {                   // Controleer of maar één vak tussen de coördinaten ligt
-                b |= (y - y1 == 2);         //
-            } else {                        //
-                b |= (y1 - y == 2);         //
+        if (x != x1 && y != y1) {       // Controleer of de vector diagonaal is
+            return false;
+        }
+
+        if (x == x1) {                  // Als vector op x-as ligt
+            if (y > y1) {               // Controleer of er maar één vak tussen de coördinaten ligt
+                b |= (y - y1 == 2);     //
+            } else {                    //
+                b |= (y1 - y == 2);     //
             }
-        } else if (y == y1) {               // Als vector op y-as ligt
-            if (x > x1) {                   // Controleer of maar één vak tussen de coördinaten ligt
-                b |= (x - x1 == 2);         //
-            } else {                        //
-                b |= (x1 - x == 2);         //
+        } else {                        // Als vector op y-as ligt
+            if (x > x1) {               // Controleer of maar er één vak tussen de coördinaten ligt
+                b |= (x - x1 == 2);     //
+            } else {                    //
+                b |= (x1 - x == 2);     //
             }
         }
 
         if (b) {
-            Coordinate c = getVictim(x, y, x1, y1);             // Haal veld tussen (x,y) en (x1,y1)
-            return matrix[c.x()][c.y()].hasPeg();               // Controleer of dit veld een bal heeft
+            Coordinate c = getVictim(x, y, x1, y1);     // Haal veld tussen (x,y) en (x1,y1)
+            return matrix[c.x()][c.y()].hasPeg();       // Controleer of dit veld een bal heeft
         }
 
         return b;
