@@ -68,6 +68,30 @@ public class TestExceptions {
         }
         System.out.println("\n" + spel.printField() + "\n");
 
+        /* (5,0) -> (3,0), spring van dode zone */
+        System.out.print("Spring van dode zone op vol vak:\n" +
+                        "(5,0) -> (3,0)\n\n"
+        );
+
+        try {
+            spel.doMove(3, 0, 5, 0);
+        } catch (IllegalCoordinateException | IllegalMoveException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("\n" + spel.printField() + "\n");
+
+        /* (5,0) -> (3,0), spring van dode zone op leeg vak */
+        System.out.print("Spring van dode zone op leeg vak:\n" +
+                        "(5,1) -> (5,3)\n\n"
+        );
+
+        try {
+            spel.doMove(3, 0, 5, 0);
+        } catch (IllegalCoordinateException | IllegalMoveException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("\n" + spel.printField() + "\n");
+
         /* (2,4) -> (4,2), spring diagonaal */
         System.out.print("Spring diagonaal:\n" +
                         "(2,4) -> (4,2)\n\n"

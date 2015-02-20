@@ -1,3 +1,18 @@
+20/02/2015 Dennis Grieten
+-------------------------
+Geïmplementeerd:
+    * Controle op game over + TestGameOver
+    * TestRandomComputer (bracht grote bug naar boven)
+        -> was mogelijk om van dood vak naar leeg vak te verplaatsen
+    *
+
+Nog te impelementeren:
+    * GUIView (als laatste)
+    * Spel resetten na endgame
+    * Highscores
+    * Spel opslaan en terug kunnen hervatten (json)
+    * ...
+
 18/02/2015 Dennis Grieten
 -------------------------
 Geïmplementeerd:
