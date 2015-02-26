@@ -77,7 +77,6 @@ public class TestEndGame {
                             "░░░░░█░░▀░░░░░░░░░░░░░░░░▀░░░\n" +
                             "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
                 }
-
             } catch (IllegalMoveException | IllegalCoordinateException e) {
                 System.out.println(e.getMessage() + "\n");
             }

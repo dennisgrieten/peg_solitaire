@@ -88,6 +88,7 @@ public class Field {
 
     /* Controleer of de gegeven coördinaten in het veld en buiten de dode zone liggen */
     private boolean inField(int x, int y) {
+
         return x < matrix.length && y < matrix[0].length && x >= 0 && y >= 0 ?
                 (matrix[y][x].isDeadZone() ? false : true) : false;
     }
