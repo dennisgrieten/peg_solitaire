@@ -23,13 +23,16 @@ public class Game {
         this.endGame = false;
     }
 
+    public int getMoveCount() {
+        return field.getMoveCount();
+    }
+
     /**
      * Controleer of het spel gedaan is
      * Maximum aantal ballen - 1 zitten in de stack
-     * of er kan geen zet meer gedaan worden (nog te implementeren!)
      */
     private void checkEndGame() {
-        if (field.getMoveCount() == 31) {
+        if (field.getStackCount() == 31) {
             endGame = true;
         }
     }

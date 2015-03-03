@@ -36,14 +36,19 @@ public class ConsoleView {
 
         do {
             choice = menuChoice();
+
             switch (choice) {
-                case 1:
+                case 1:                 // New game
                     startGame(false);
                     break;
-                case 2:
+                case 2:                 // Resume game
                     startGame(true);
                     break;
-                default:
+                case 3:                 // Undo move
+                    game.undoMove();
+                    startGame(true);
+                    break;
+                default:                // Exit
                     System.out.println("Good bye!");
                     choice = 0;
             }
@@ -83,6 +88,8 @@ public class ConsoleView {
     private void startGame(boolean resume) {
         if (!resume) {
             menuItems.put(2, "Resume game");
+            menuItems.put(3, "Undo move");
+            this.game = new Game();
             System.out.println("###############");
         }
 
@@ -128,6 +135,7 @@ public class ConsoleView {
             }
 
             System.out.println(game.printField());
+            System.out.printf("Moves: %d\n", game.getMoveCount());
         } while (!exit);
     }
 }
