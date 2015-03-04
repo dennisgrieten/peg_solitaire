@@ -7,8 +7,8 @@ public class Hole {
     private Field parent;
     private Peg peg;
     private Coordinate coordinate;
-    private boolean deadZone;   // Vlag voor dode Vakken
-    private boolean jumped;     // Vlag voor
+    private boolean deadZone;       // Vlag voor dood vak
+    private boolean jumped;         // Vlag voor oversprongen
 
     public Hole(Peg p, Coordinate c, Field f) {
         this.peg = p;

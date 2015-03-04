@@ -32,7 +32,7 @@ public class Game {
      * Maximum aantal ballen - 1 zitten in de stack
      */
     private void checkEndGame() {
-        if (field.getStackCount() == 31) {
+        if (field.getStackSize() == 31) {
             endGame = true;
         }
     }

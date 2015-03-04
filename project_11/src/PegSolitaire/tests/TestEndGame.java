@@ -54,8 +54,8 @@ public class TestEndGame {
         for (int i = 0; i < c.length;) {
             try {
                 game.doMove(c[i++],c[i++],c[i++],c[i++]);
-                System.out.println(game.printField());
-                System.out.printf("Moves: %d\n", game.getMoveCount());
+                System.out.print(game.printField());
+                System.out.printf("Moves: %d\n\n", game.getMoveCount());
 
                 if (game.isEndgame()) {
                     System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n" +
