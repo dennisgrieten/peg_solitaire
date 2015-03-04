@@ -9,12 +9,21 @@ import java.util.Stack;
  */
 public class Field {
     private Hole[][] matrix;
-    private Stack<Peg> stack = new Stack<>();        // Stack voor verwijderde ballen
-    private Stack<Coordinate> moveHistory = new Stack<Coordinate>();
-    private byte[] deadZoneMap = new byte[]{0, 1, 5, 6};
+    private Stack<Peg> stack;                           // Stack voor verwijderde ballen
+    private Stack<Coordinate> moveHistory;              // Stack voor effectieve zetten
+    private Stack<Stack<Coordinate>> jumpedHoles;       // Stack voor stacks van relatieve zetten bevattend: coördinaten van oversprongen vakken
+    private Coordinate lastMoveDestination;
+    private int moveCount;
+    private int[] deadZoneMap = new int[]{0, 1, 5, 6};
 
     public Field(int dimensionX, int dimensionY) {
         matrix = new Hole[dimensionY][dimensionX];
+        stack = new Stack<>();
+        moveHistory = new Stack<>();
+        jumpedHoles = new Stack<>();
+        jumpedHoles.push(new Stack<>());
+        lastMoveDestination = new Coordinate(-1, -1);   // Foutieve coördinaten voor de eerste zet (anders nullpointer exception)
+        moveCount = 0;
         initField();
     }
 
@@ -37,9 +46,13 @@ public class Field {
         matrix[3][3].clearPeg();        // Delete middelste bal
     }
 
-    /* Groote van de stack reflecteerd het aantal zetten. */
-    public int getMoveCount() {
+    /* Groote van de stack reflecteerd het aantal effectieve zetten. */
+    public int getStackSize() {
         return stack.size();
+    }
+
+    public int getMoveCount() {
+        return moveCount;
     }
 
     public void doMove(int x, int y, int x1, int y1) throws IllegalCoordinateException, IllegalMoveException {
@@ -47,7 +60,6 @@ public class Field {
             if (inField(x, y) && inField(x1, y1)) {
                 if (isLegalMove(x, y, x1, y1)) {
                     movePeg(x, y, x1, y1);
-
                 } else {
                     throw new IllegalMoveException("Illegal move");
                 }
@@ -59,36 +71,92 @@ public class Field {
         }
     }
 
-    /* Maak de laatste zet ongedaan */
-    public void undoMove() {
-        if (stack.size() != 0) {
-            resetPeg(stack.pop());
-            Coordinate a = moveHistory.pop();
-            Coordinate b = moveHistory.pop();
-            matrix[b.x()][b.y()].setPeg(matrix[a.x()][a.y()].givePeg());
+    private void movePeg(int x, int y, int x1, int y1) {
+        matrix[x1][y1].setPeg(matrix[x][y].givePeg());      // Overhandig bal van één vak naar het ander
+
+        /* Als het niet dezelfde bal is als de voorlaatste zet markeer dan alle jumped vakken als false en verhoog moveCount */
+        if (isOtherPeg(x, y)) {
+            nextRelativeMove();
+            moveCount++;
         }
+
+        moveHistory.push(new Coordinate(x, y));             // Coördinaten effectieve zet beginvak -> in geschiedenis
+        moveHistory.push(new Coordinate(x1, y1));           // Coördinaten effectieve zet eindvak -> in geschiedinis
+        this.lastMoveDestination = new Coordinate(x1, y1);  // Update coördinaten van laatste eindvak (relatieve zet)
+        removePeg(getVictim(x, y, x1, y1));                 // Verwijder bal en zet op de stack
+    }
+
+    public void nextRelativeMove() {
+        setJumpedHoles(false);
+        jumpedHoles.push(new Stack<>());
     }
 
     /* Verwijder bal en plaats op de stack */
-    private void pushPeg(Coordinate c) {
-        stack.push(matrix[c.x()][c.y()].givePeg(true));       // Verplaats bal van opgegeven vak naar de stack
-    }
-
-    private void movePeg(int x, int y, int x1, int y1) {
-        matrix[x1][y1].setPeg(matrix[x][y].givePeg());        // Overhandig bal van één vak naar het ander
-        pushPeg(getVictim(x, y, x1, y1));                     // Verwijder bal
-        moveHistory.push(new Coordinate(x, y));               // Plaats coördinaat zet beginvak in geschiedenis
-        moveHistory.push(new Coordinate(x1, y1));             // Plaats coördinaat zet eindvak in geschiedinis
+    private void removePeg(Coordinate c) {
+        int x = c.x();
+        int y = c.y();
+        stack.push(matrix[x][y].givePeg(true));     // Verplaats bal van opgegeven vak naar de stack
+        markJumped(c);                              // Markeer als oversprongen vak
     }
 
     private void resetPeg(Peg peg) {
-        Coordinate c = peg.popHistory();        // Pop coördinaat van bal geschiedenis in tijdelijke pointer
-        matrix[c.x()][c.y()].setPeg(peg);       // Zet bal terug op het veld met oude coördinaten
+        Coordinate c = peg.popHistory();            // Pop coördinaat van bal geschiedenis in tijdelijke pointer
+        matrix[c.x()][c.y()].setPeg(peg);           // Zet bal terug op het veld met oude coördinaten
+    }
+
+    private boolean isOtherPeg(int x, int y) {
+        int lastX = lastMoveDestination.x();        // Haal x en y waarden eindvak vorige zet op
+        int lastY = lastMoveDestination.y();        //
+
+        return x != lastX | y != lastY;
+    }
+
+    private void markJumped(Coordinate c) {
+        matrix[c.x()][c.y()].setJumped(true);       // Markeer als oversprongen vak
+        jumpedHoles.peek().push(c);                 // Plaats op stack van oversprongen vakken voor huidige relatieve zet
+    }
+
+    /*
+    * Markeer alle jumped vakken als als true/false
+    */
+    private void setJumpedHoles(boolean mark) {
+        Coordinate c;
+        int j = jumpedHoles.peek().size();
+            Stack<Coordinate> temp = new Stack<>();
+
+        for (int i = 0; i < j; i++) {
+            c = jumpedHoles.peek().pop();
+            temp.push(c);
+            matrix[c.x()][c.y()].setJumped(mark);
+        }
+
+        j = temp.size();
+
+        for (int i = 0; i < j; i++) {
+            jumpedHoles.peek().push(temp.pop());
+        }
+    }
+
+    /* Maak de laatste zet ongedaan */
+    public void undoMove() {
+        if (stack.size() > 0) {
+            int j = jumpedHoles.peek().size();
+
+            for (int i = 0; i < j; i++) {
+                resetPeg(stack.pop());
+                Coordinate a = moveHistory.pop();
+                Coordinate b = moveHistory.pop();
+                matrix[b.x()][b.y()].setPeg(matrix[a.x()][a.y()].givePeg());
+            }
+
+            jumpedHoles.pop();
+            setJumpedHoles(true);
+            moveCount--;
+        }
     }
 
     /* Controleer of de gegeven coördinaten in het veld en buiten de dode zone liggen */
     private boolean inField(int x, int y) {
-
         return x < matrix.length && y < matrix[0].length && x >= 0 && y >= 0 ?
                 (matrix[y][x].isDeadZone() ? false : true) : false;
     }

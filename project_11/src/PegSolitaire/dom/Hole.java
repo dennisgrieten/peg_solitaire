@@ -7,7 +7,8 @@ public class Hole {
     private Field parent;
     private Peg peg;
     private Coordinate coordinate;
-    private boolean deadZone;   // Vlag voor dode Vakken
+    private boolean deadZone;       // Vlag voor dood vak
+    private boolean jumped;         // Vlag voor oversprongen
 
     public Hole(Peg p, Coordinate c, Field f) {
         this.peg = p;
@@ -17,8 +18,8 @@ public class Hole {
     }
 
     public Hole(Peg p, boolean d) {
-        this.peg = p;
-        this.deadZone = d;
+        setPeg(p);
+        setDeadZone(d);
     }
 
     public boolean hasPeg() {
@@ -37,18 +38,23 @@ public class Hole {
         this.deadZone = d;
     }
 
+    public void setJumped(boolean j) {
+        this.jumped = j;
+    }
+
     public void setPeg(Peg p) {
         this.peg = p;
+        this.jumped = false;
     }
 
     public void clearPeg() {
-        this.peg = null;       // Wis pointer van bal in dit vak
+        this.peg = null;        // Wis pointer van bal in dit vak
     }
 
     /* Overhandig de ball */
     public Peg givePeg() {
-        Peg out = this.peg;   // Tijdelijke extra pointer naar ball
-        clearPeg();            // Verwijder pointer naar de bal in dit vak
+        Peg out = this.peg;     // Tijdelijke extra pointer naar ball
+        clearPeg();             // Verwijder pointer naar de bal in dit vak
         return out;
     }
 
@@ -66,6 +72,6 @@ public class Hole {
 
     @Override
     public String toString() {
-        return (deadZone?" ": hasPeg()?"◉":"○");      //●
+        return (deadZone?" ": hasPeg() ?"◉":jumped?"◎":"○");      //●
     }
 }

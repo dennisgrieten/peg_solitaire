@@ -31,7 +31,7 @@ public class TestRandomComputer {
             turn++;
             try {
                 game.doMove(x, y, x1, y1);
-                System.out.printf("turn: %d\n", turn);
+                System.out.printf("Turn: %d\nMoves: %d\n", turn, game.getMoveCount());
                 System.out.println(game.printField());
 
                 if (game.isGameOver()) {
