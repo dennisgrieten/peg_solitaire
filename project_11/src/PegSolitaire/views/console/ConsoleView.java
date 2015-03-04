@@ -39,7 +39,7 @@ public class ConsoleView {
 
             switch (choice) {
                 case 1:                 // New game
-                    startGame(false);
+                    startGame(true);
                     break;
                 case 2:                 // Resume game
                     startGame(true);
@@ -63,6 +63,14 @@ public class ConsoleView {
         do {
             System.out.println("Choose your option:");
 
+            if (game.getMoveCount() == 0) {
+                menuItems.remove(2);
+                menuItems.remove(3);
+            } else {
+                menuItems.put(2, "2. Resume game");
+                menuItems.put(3, "3. Undo move");
+            }
+
             for (int i = 0; i < menuItems.size(); i++) {
                 System.out.printf("%d. %s\n", i, menuItems.get(i));
             }
@@ -85,12 +93,9 @@ public class ConsoleView {
         return choice;
     }
 
-    private void startGame(boolean resume) {
-        if (!resume) {
-            menuItems.put(2, "Resume game");
-            menuItems.put(3, "Undo move");
-            this.game = new Game();
-            System.out.println("###############");
+    private void startGame(boolean start) {
+        if (game == null) {
+            game = new Game();
         }
 
         boolean exit = false;
