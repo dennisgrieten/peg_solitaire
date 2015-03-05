@@ -27,7 +27,24 @@ public class GUIView extends JFrame {
         this.validate();
     }
 
+    private void initComponents() {
+
+    }
+
+    private void layoutComponents() {
+
+    }
+
     private void initMenu() {
-        this.setJMenuBar(new MenuBar());
+        this.setJMenuBar(new MenuBar(game));
+    }
+
+    private void showFrame() {
+        this.setBounds(50, 50, 800, 800);
+        this.setPreferredSize(new Dimension(600, 600));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.pack();
+        this.setVisible(true);
+        this.doLayout();
     }
 }

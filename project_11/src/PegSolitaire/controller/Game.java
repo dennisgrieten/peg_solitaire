@@ -27,6 +27,14 @@ public class Game {
         return field.getMoveCount();
     }
 
+    public int getDimensionX() {
+        return field.getDimensionX();
+    }
+
+    public int getDimensionY() {
+        return field.getDimensionY();
+    }
+
     /**
      * Controleer of het spel gedaan is
      * Maximum aantal ballen - 1 zitten in de stack
@@ -59,6 +67,10 @@ public class Game {
 
     public boolean isGameOver() {
         return gameOver;
+    }
+
+    public Field getField() {
+        return this.field;
     }
 
     public String printField() {

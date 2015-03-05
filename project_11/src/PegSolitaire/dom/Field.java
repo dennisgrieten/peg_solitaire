@@ -13,11 +13,14 @@ public class Field {
     private Stack<Coordinate> moveHistory;              // Stack voor effectieve zetten
     private Stack<Stack<Coordinate>> jumpedHoles;       // Stack voor stacks van relatieve zetten bevattend: coördinaten van oversprongen vakken
     private Coordinate lastMoveDestination;
+    private int dimensionX;
+    private int dimensionY;
     private int moveCount;
     private int[] deadZoneMap = new int[]{0, 1, 5, 6};
 
     public Field(int dimensionX, int dimensionY) {
-        matrix = new Hole[dimensionY][dimensionX];
+        this.dimensionX = dimensionX;
+        this.dimensionY = dimensionY;
         stack = new Stack<>();
         moveHistory = new Stack<>();
         jumpedHoles = new Stack<>();
@@ -29,6 +32,8 @@ public class Field {
 
     /* Maak matrix aan */
     private void initField() {
+        matrix = new Hole[dimensionY][dimensionX];
+
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 matrix[i][j] = new Hole(new Peg(), new Coordinate(i, j), this);
@@ -44,6 +49,18 @@ public class Field {
         }
 
         matrix[3][3].clearPeg();        // Delete middelste bal
+    }
+
+    public int getDimensionX() {
+        return dimensionX;
+    }
+
+    public int getDimensionY() {
+        return dimensionY;
+    }
+
+    public Hole[][] getMatrix() {
+        return matrix;
     }
 
     /* Groote van de stack reflecteerd het aantal effectieve zetten. */
