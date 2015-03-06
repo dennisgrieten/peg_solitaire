@@ -67,8 +67,8 @@ public class ConsoleView {
                 menuItems.remove(2);
                 menuItems.remove(3);
             } else {
-                menuItems.put(2, "2. Resume game");
-                menuItems.put(3, "3. Undo move");
+                menuItems.put(2, "Resume game");
+                menuItems.put(3, "Undo move");
             }
 
             for (int i = 0; i < menuItems.size(); i++) {
