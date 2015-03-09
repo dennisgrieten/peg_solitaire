@@ -2,6 +2,8 @@ package PegSolitaire.dom;
 
 import PegSolitaire.exceptions.IllegalCoordinateException;
 import PegSolitaire.exceptions.IllegalMoveException;
+
+import java.lang.reflect.Array;
 import java.util.Stack;
 
 /**
@@ -51,16 +53,16 @@ public class Field {
         matrix[3][3].clearPeg();        // Delete middelste bal
     }
 
+    public Hole[][] getMatrix() {
+        return matrix;
+    }
+
     public int getDimensionX() {
         return dimensionX;
     }
 
     public int getDimensionY() {
         return dimensionY;
-    }
-
-    public Hole[][] getMatrix() {
-        return matrix;
     }
 
     /* Groote van de stack reflecteerd het aantal effectieve zetten. */

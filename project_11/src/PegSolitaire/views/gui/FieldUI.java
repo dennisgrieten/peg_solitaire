@@ -18,6 +18,7 @@ public class FieldUI extends JPanel {
     public FieldUI(Game g) {
         this.game = g;
         this.field = game.getField();
+        this.matrix = field.getMatrix();
         initComponents();
     }
 
