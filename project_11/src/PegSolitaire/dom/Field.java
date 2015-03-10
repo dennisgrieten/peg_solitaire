@@ -242,21 +242,15 @@ public class Field {
                 if (!matrix[x][y - 2].hasPeg() && matrix[x][y - 1].hasPeg()) {
                     return true;
                 }
-            }
-
-            if (inField(x, y + 2)) {        // Zuid
+            } if (inField(x, y + 2)) {      // Zuid
                 if (!matrix[x][y + 2].hasPeg() && matrix[x][y + 1].hasPeg()) {
                     return true;
                 }
-            }
-
-            if (inField(x - 2, y)) {         // West
+            } if (inField(x - 2, y)) {      // West
                 if (!matrix[x - 2][y].hasPeg() && matrix[x - 1][y].hasPeg()) {
                     return true;
                 }
-            }
-
-            if (inField(x + 2, y)) {         // Oost
+            } if (inField(x + 2, y)) {      // Oost
                 if (!matrix[x + 2][y].hasPeg() && matrix[x + 1][y].hasPeg()) {
                     return true;
                 }

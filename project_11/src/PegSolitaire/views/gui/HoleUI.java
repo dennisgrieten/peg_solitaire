@@ -2,6 +2,8 @@ package PegSolitaire.views.gui;
 
 import PegSolitaire.controller.Game;
 import PegSolitaire.dom.Hole;
+import PegSolitaire.exceptions.IllegalCoordinateException;
+import PegSolitaire.exceptions.IllegalMoveException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +14,7 @@ import java.awt.event.MouseEvent;
  * Created by dennis on 5/03/15.
  */
 public class HoleUI extends JPanel{
+    private static boolean pegSelected = false;
     private Game game;
     private Hole hole;
     private JLabel holeLabel;
@@ -19,7 +22,7 @@ public class HoleUI extends JPanel{
     private Color hoverColor = new Color(63, 171, 167);
     private Color selectColor = new Color(232,105, 3);
     private Color jumpedColor = new Color(184, 0, 5);
-    private Font monospace = new Font("monospaced", Font.PLAIN, 80);
+    private Font monospace = new Font("monospaced", Font.PLAIN, 90);
     private boolean selected = false;
     private boolean isMouseOver = false;
 
@@ -36,11 +39,14 @@ public class HoleUI extends JPanel{
                 if (!selected && hole.isSelectable()) {
                     holeLabel.setForeground(selectColor);
                     selected = true;
+                    holeLabel.setText("s");
+
                 } else {
                     holeLabel.setForeground(hoverColor);
                     selected = false;
                 }
                 repaint();
+                revalidate();
             }
 
             @Override
@@ -51,6 +57,7 @@ public class HoleUI extends JPanel{
                     isMouseOver = true;
                     holeLabel.setForeground(hoverColor);
                     repaint();
+                    revalidate();
                 }
             }
 
@@ -61,6 +68,7 @@ public class HoleUI extends JPanel{
                 if (!selected) {
                     isMouseOver = false;
                     holeLabel.setForeground(startColor);
+                    revalidate();
                     repaint();
                 }
             }
@@ -78,13 +86,6 @@ public class HoleUI extends JPanel{
         holeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         holeLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(holeLabel, BorderLayout.CENTER);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        if (isMouseOver)
-        super.paintComponent(g);
-        // adaptFontSize(holeLabel);
     }
 
     private void adaptFontSize(JLabel label) {
@@ -105,5 +106,10 @@ public class HoleUI extends JPanel{
 
         // Set the label's font size to the newly determined size.
         label.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        holeLabel.setText(hole.toString());
     }
 }

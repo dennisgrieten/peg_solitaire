@@ -62,7 +62,7 @@ public class MenuBar extends JMenuBar {
         options.add(new JSeparator());
         options.add(showExample);
         options.add(new JSeparator());
-        options.add(edit);
+        options.add(exit);
 
         /* View */
         view.add(fullscreen);
@@ -93,6 +93,12 @@ public class MenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleShowExample();
+            }
+        });
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
     }

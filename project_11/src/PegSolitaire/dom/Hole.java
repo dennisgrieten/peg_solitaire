@@ -70,8 +70,21 @@ public class Hole {
         }
     }
 
-    public boolean isSelectable() {
-        return parent.selectable(coordinate.x(), coordinate.y());
+    public int x() {
+        return coordinate.x();
+    }
+
+    public int y() {
+        return coordinate.y();
+    }
+
+
+    public boolean isSelectable(Boolean emptyHole) {
+        if (emptyHole) {
+
+        } else {
+            return parent.selectable(coordinate.x(), coordinate.y());
+        }
     }
 
     @Override

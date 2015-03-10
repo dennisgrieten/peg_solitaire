@@ -42,7 +42,6 @@ public class GUIView extends JFrame {
 
     private void layoutComponents() {
         gamePanel.add(new FieldUI(game), BorderLayout.CENTER);
-
         getContentPane().add(gamePanel, BorderLayout.CENTER);
         getContentPane().add(controlPanel, BorderLayout.SOUTH);
         getContentPane().add(scorePanel, BorderLayout.NORTH);
@@ -57,7 +56,6 @@ public class GUIView extends JFrame {
     }
 
     public void showHowItIsDone() {
-        this.game = new Game();
         int[] c = {
                 1, 3, 3, 3,
                 2, 5, 2, 3,
@@ -105,7 +103,10 @@ public class GUIView extends JFrame {
             } catch (IllegalMoveException | IllegalCoordinateException e) {
                 showErrorMessage(e.getMessage());
             }
+
             repaint();
+
+
         }
     }
 

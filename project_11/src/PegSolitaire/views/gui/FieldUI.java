@@ -37,7 +37,8 @@ public class FieldUI extends JPanel {
         }
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 }
