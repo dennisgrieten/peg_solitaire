@@ -70,6 +70,10 @@ public class Hole {
         }
     }
 
+    public boolean isSelectable() {
+        return parent.selectable(coordinate.x(), coordinate.y());
+    }
+
     @Override
     public String toString() {
         return (deadZone?" ": hasPeg() ?"◉":jumped?"◎":"○");      //●

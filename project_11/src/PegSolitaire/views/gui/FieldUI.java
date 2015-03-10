@@ -14,12 +14,17 @@ public class FieldUI extends JPanel {
     private final Game game;
     private Field field;
     private Hole[][] matrix;
+    private Hole selected;
 
     public FieldUI(Game g) {
         this.game = g;
         this.field = game.getField();
         this.matrix = field.getMatrix();
         initComponents();
+    }
+
+    public void setSelected(Hole h) {
+        this.selected = h;
     }
 
     private void initComponents() {

@@ -4,6 +4,8 @@ import PegSolitaire.controller.Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 /**
@@ -17,6 +19,7 @@ public class MenuBar extends JMenuBar {
     private JMenuItem newGame;
     private JMenuItem saveGame;
     private JMenuItem loadGame;
+    private JMenuItem showExample;
     private JMenuItem exit;
     private JMenuItem fullscreen;
     private JMenuItem darkTheme;
@@ -38,6 +41,7 @@ public class MenuBar extends JMenuBar {
         saveGame = new JMenuItem("Spel Opslaan");
         saveGame.setEnabled(false);                 // Enable wanneer nieuw spel gestart is
         loadGame = new JMenuItem("Spel Laden");
+        showExample = new JMenuItem("Toon Voorbeeld");
         exit = new JMenuItem("Exit");
 
         /* View */
@@ -55,6 +59,9 @@ public class MenuBar extends JMenuBar {
         options.add(newGame);
         options.add(saveGame);
         options.add(loadGame);
+        options.add(new JSeparator());
+        options.add(showExample);
+        options.add(new JSeparator());
         options.add(edit);
 
         /* View */
@@ -82,6 +89,16 @@ public class MenuBar extends JMenuBar {
     }
 
     private void addListeners() {
+        showExample.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleShowExample();
+            }
+        });
+    }
 
+    private void handleShowExample() {
+        GUIView guiView = (GUIView) SwingUtilities.getAncestorOfClass(GUIView.class, this);
+        guiView.showHowItIsDone();
     }
 }

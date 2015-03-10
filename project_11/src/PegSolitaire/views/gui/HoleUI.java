@@ -4,8 +4,9 @@ import PegSolitaire.controller.Game;
 import PegSolitaire.dom.Hole;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by dennis on 5/03/15.
@@ -13,33 +14,77 @@ import java.awt.*;
 public class HoleUI extends JPanel{
     private Game game;
     private Hole hole;
-    private JLabel peg;
-    private Font monospace = new Font("monospaced", Font.PLAIN, 20);
+    private JLabel holeLabel;
+    private Color startColor = new Color(2, 141, 136);
+    private Color hoverColor = new Color(63, 171, 167);
+    private Color selectColor = new Color(232,105, 3);
+    private Color jumpedColor = new Color(184, 0, 5);
+    private Font monospace = new Font("monospaced", Font.PLAIN, 80);
+    private boolean selected = false;
+    private boolean isMouseOver = false;
 
     public HoleUI(Hole h, Game g) {
         this.game = g;
         this.hole = h;
         initComponents();
         layoutComponents();
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (!selected && hole.isSelectable()) {
+                    holeLabel.setForeground(selectColor);
+                    selected = true;
+                } else {
+                    holeLabel.setForeground(hoverColor);
+                    selected = false;
+                }
+                repaint();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+
+                if (!selected) {
+                    isMouseOver = true;
+                    holeLabel.setForeground(hoverColor);
+                    repaint();
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+
+                if (!selected) {
+                    isMouseOver = false;
+                    holeLabel.setForeground(startColor);
+                    repaint();
+                }
+            }
+        });
     }
 
     private void initComponents() {
-        peg = new JLabel(hole.toString());
-        peg.setFont(monospace);
-        peg.setForeground(Color.black);
+        holeLabel = new JLabel(hole.toString());
+        holeLabel.setFont(monospace);
+        holeLabel.setForeground(startColor);
     }
 
     private void layoutComponents() {
         this.setLayout(new BorderLayout());
-        peg.setHorizontalAlignment(SwingConstants.CENTER);
-        peg.setVerticalAlignment(SwingConstants.CENTER);
-        this.add(peg, BorderLayout.CENTER);
+        holeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        holeLabel.setVerticalAlignment(SwingConstants.CENTER);
+        this.add(holeLabel, BorderLayout.CENTER);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+        if (isMouseOver)
         super.paintComponent(g);
-        adaptFontSize(peg);
+        // adaptFontSize(holeLabel);
     }
 
     private void adaptFontSize(JLabel label) {
