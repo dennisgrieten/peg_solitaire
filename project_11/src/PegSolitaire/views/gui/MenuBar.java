@@ -26,13 +26,14 @@ public class MenuBar extends JMenuBar {
         super();
         this.game = g;
         initComponents();
+        layoutComponents();
         setAccelerators();
         addListeners();
     }
 
     private void initComponents() {
         /* Options */
-        JMenu options = new JMenu("Opties");
+        options = new JMenu("Opties");
         newGame = new JMenuItem("Nieuw Spel");
         saveGame = new JMenuItem("Spel Opslaan");
         saveGame.setEnabled(false);                 // Enable wanneer nieuw spel gestart is
@@ -40,13 +41,32 @@ public class MenuBar extends JMenuBar {
         exit = new JMenuItem("Exit");
 
         /* View */
-        JMenu view = new JMenu("Beeld");
+        view = new JMenu("Beeld");
         fullscreen = new JMenuItem("Volledig Scherm");
         darkTheme = new JMenuItem("Donker Thema");
 
         /* Edit */
-        JMenu edit = new JMenu("Bewerk");
+        edit = new JMenu("Bewerk");
         undo = new JMenuItem("Maak Zet Ongedaan");
+    }
+
+    private void layoutComponents() {
+        /* Options */
+        options.add(newGame);
+        options.add(saveGame);
+        options.add(loadGame);
+        options.add(edit);
+
+        /* View */
+        view.add(fullscreen);
+        view.add(darkTheme);
+
+        /* Edit */
+        edit.add(undo);
+
+        this.add(options);
+        this.add(edit);
+        this.add(view);
     }
 
     private void setAccelerators() {

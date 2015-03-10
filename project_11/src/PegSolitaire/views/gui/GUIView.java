@@ -10,33 +10,48 @@ import java.awt.*;
  */
 public class GUIView extends JFrame {
     private Game game;
+    private FieldUI fieldUI;
+    private JPanel gamePanel;
+    private JPanel controlPanel;
+    private JPanel scorePanel;
 
     public GUIView(String title) throws HeadlessException {
         super(title);
         game = new Game();
 
-        initMenu();
         initView();
         showFrame();
     }
 
     private void initView() {
         getContentPane().removeAll();
+        initMenu();
         initComponents();
         layoutComponents();
-        this.validate();
+        // javathis.validate();
     }
 
     private void initComponents() {
-
+        gamePanel = new JPanel(new BorderLayout());
+        fieldUI = new FieldUI(game);
+        controlPanel = new ControlPanel(game);
+        scorePanel = new ScorePanel(game);
     }
 
     private void layoutComponents() {
+        gamePanel.add(new FieldUI(game), BorderLayout.CENTER);
 
+        getContentPane().add(gamePanel, BorderLayout.CENTER);
+        getContentPane().add(controlPanel, BorderLayout.SOUTH);
+        getContentPane().add(scorePanel, BorderLayout.NORTH);
     }
 
     private void initMenu() {
         this.setJMenuBar(new MenuBar(game));
+    }
+
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Fout", JOptionPane.ERROR_MESSAGE);
     }
 
     private void showFrame() {
