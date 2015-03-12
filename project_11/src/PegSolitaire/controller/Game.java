@@ -23,6 +23,10 @@ public class Game {
         this.endGame = false;
     }
 
+    public int getCurrentPegCount() {
+        return field.getCurrentPegCount();
+    }
+
     public int getMoveCount() {
         return field.getMoveCount();
     }
@@ -40,7 +44,7 @@ public class Game {
      * Maximum aantal ballen - 1 zitten in de stack
      */
     private void checkEndGame() {
-        if (field.getStackSize() == 31) {
+        if (field.getStackSize() == (field.getPegCount() - 1)) {
             endGame = true;
         }
     }
@@ -59,6 +63,11 @@ public class Game {
     /* Maak een zet ongedaan */
     public void undoMove() {
         field.undoMove();
+    }
+
+    /* Controleer of het een legale zet is */
+    public boolean isLegalMove(int x, int y, int x1, int y1) {
+        return field.isLegalMove(x, y, x1, y1);
     }
 
     public boolean isEndgame() {

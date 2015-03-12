@@ -41,10 +41,11 @@ public class GUIView extends JFrame {
     }
 
     private void layoutComponents() {
+        scorePanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 30, 5));     // Flowlayout (int align, int hgap, int vgap)
+        gamePanel.add(scorePanel, BorderLayout.NORTH);
         gamePanel.add(new FieldUI(game), BorderLayout.CENTER);
+        gamePanel.add(controlPanel, BorderLayout.SOUTH);
         getContentPane().add(gamePanel, BorderLayout.CENTER);
-        getContentPane().add(controlPanel, BorderLayout.SOUTH);
-        getContentPane().add(scorePanel, BorderLayout.NORTH);
     }
 
     private void initMenu() {
@@ -55,64 +56,26 @@ public class GUIView extends JFrame {
         JOptionPane.showMessageDialog(this, message, "Fout", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void showEndGameDialog() {
+        JOptionPane.showMessageDialog(this, "Proficiat, je hebt het spel voltooid!", "Uitgespeeld!", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void showGameOverDialog() {
+        JOptionPane.showMessageDialog(this, "Er zijn geen zetten meer mogelijk", "Game Over!", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public void showHowItIsDone() {
-        int[] c = {
-                1, 3, 3, 3,
-                2, 5, 2, 3,
-                0, 4, 2, 4,
-                3, 4, 1, 4,
-                5, 4, 3, 4,
-                4, 6, 4, 4,
-                4, 3, 4, 5,
-                2, 6, 4, 6,
-                4, 6, 4, 4,
-                2, 2, 2, 4,
-                2, 0, 2, 2,
-                4, 1, 4, 3,
-                4, 3, 4, 5,
-                4, 5, 2, 5,
-                2, 5, 2, 3,
-                2, 3, 2, 1,
-                0, 2, 0, 4,
-                0, 4, 2, 4,
-                2, 4, 4, 4,
-                6, 2, 4, 2,
-                3, 2, 5, 2,
-                6, 4, 6, 2,
-                6, 2, 4, 2,
-                4, 0, 2, 0,
-                2, 0, 2, 2,
-                1, 2, 3, 2,
-                3, 2, 5, 2,
-                5, 2, 5, 4,
-                5, 4, 3, 4,
-                3, 4, 3, 2,
-                3, 1, 3, 3,
-        };
-
-        int x = 0, y = 0, x1 = 0, y1 = 0;
-
-        for (int i = 0; i < c.length;) {
-            try {
-                game.doMove(c[i++],c[i++],c[i++],c[i++]);
-                System.out.println(game.printField());
-
-                if (game.isEndgame()) {
-
-                }
-            } catch (IllegalMoveException | IllegalCoordinateException e) {
-                showErrorMessage(e.getMessage());
-            }
-
-            repaint();
-
-
+        try {
+            fieldUI.showHowItIsDone();
+        } catch (IllegalCoordinateException | IllegalMoveException e) {
+            showErrorMessage(e.getMessage());
         }
+        showEndGameDialog();
     }
 
     private void showFrame() {
-        this.setBounds(50, 50, 800, 800);
-        this.setPreferredSize(new Dimension(600, 600));
+        this.setBounds(50, 50, 900, 900);
+        this.setPreferredSize(new Dimension(700, 700));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);

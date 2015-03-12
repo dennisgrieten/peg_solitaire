@@ -38,10 +38,6 @@ public class Hole {
         this.deadZone = d;
     }
 
-    public void setJumped(boolean j) {
-        this.jumped = j;
-    }
-
     public void setPeg(Peg p) {
         this.peg = p;
         this.jumped = false;
@@ -78,17 +74,20 @@ public class Hole {
         return coordinate.y();
     }
 
+    public boolean isJumped() {
+        return jumped;
+    }
 
-    public boolean isSelectable(Boolean emptyHole) {
-        if (emptyHole) {
+    public void setJumped(boolean j) {
+        this.jumped = j;
+    }
 
-        } else {
-            return parent.selectable(coordinate.x(), coordinate.y());
-        }
+    public boolean isSelectable() {
+        return parent.selectable(coordinate.x(), coordinate.y());
     }
 
     @Override
     public String toString() {
-        return (deadZone?" ": hasPeg() ?"◉":jumped?"◎":"○");      //●
+        return (deadZone?" ": hasPeg() ?"◉":jumped?"◎":"○");      //●◎
     }
 }

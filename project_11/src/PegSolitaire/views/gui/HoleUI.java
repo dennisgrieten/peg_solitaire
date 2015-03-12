@@ -13,16 +13,17 @@ import java.awt.event.MouseEvent;
 /**
  * Created by dennis on 5/03/15.
  */
-public class HoleUI extends JPanel{
-    private static boolean pegSelected = false;
-    private Game game;
+public class HoleUI extends JPanel {
+    private static HoleUI selectedPeg = null;
+    private final Game game;
     private Hole hole;
     private JLabel holeLabel;
     private Color startColor = new Color(2, 141, 136);
     private Color hoverColor = new Color(63, 171, 167);
     private Color selectColor = new Color(232,105, 3);
     private Color jumpedColor = new Color(184, 0, 5);
-    private Font monospace = new Font("monospaced", Font.PLAIN, 90);
+    private Color jumpedHoverColor = new Color(143, 0, 4);
+    private Font monospace = new Font("monospaced", Font.PLAIN, 100);
     private boolean selected = false;
     private boolean isMouseOver = false;
 
@@ -31,48 +32,76 @@ public class HoleUI extends JPanel{
         this.hole = h;
         initComponents();
         layoutComponents();
+        addListeners();
+    }
 
+    private void addListeners() {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (!selected && hole.isSelectable()) {
-                    holeLabel.setForeground(selectColor);
-                    selected = true;
-                    holeLabel.setText("s");
-
-                } else {
-                    holeLabel.setForeground(hoverColor);
-                    selected = false;
-                }
-                repaint();
-                revalidate();
+                handleMouseClick();
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-
-                if (!selected) {
-                    isMouseOver = true;
-                    holeLabel.setForeground(hoverColor);
-                    repaint();
-                    revalidate();
-                }
+                isMouseOver = true;
+                repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-
-                if (!selected) {
-                    isMouseOver = false;
-                    holeLabel.setForeground(startColor);
-                    revalidate();
-                    repaint();
-                }
+                isMouseOver = false;
+                repaint();
             }
         });
+    }
+
+    private void handleMouseClick() {
+        GUIView guiView = (GUIView) SwingUtilities.getAncestorOfClass(GUIView.class, this);
+
+        if (selected) {
+            selectedPeg = null;
+            this.setSelected(false);
+        } else if (selectedPeg != null) {
+            int x = selectedPeg.getHole().x();
+            int y = selectedPeg.getHole().y();
+            if (game.isLegalMove(x, y, hole.x(), hole.y())) {
+                try {
+                    game.doMove(x, y, hole.x(), hole.y());
+
+                    if (game.isEndgame()) {
+                        guiView.repaint();
+                        guiView.showEndGameDialog();
+                    } else if (game.isGameOver()) {
+                        guiView.repaint();
+                        guiView.showGameOverDialog();
+                    }
+
+                } catch (IllegalCoordinateException | IllegalMoveException e) {
+                    guiView.showErrorMessage(e.getMessage());
+                } finally {
+                    if (hole.isSelectable()) {
+                        selectedPeg.setSelected(false);
+                        selectedPeg = this;
+                        this.setSelected(true);
+                    } else {
+                        selectedPeg.setSelected(false);
+                    }
+
+                }
+            } else if (hole.isSelectable()) {
+                selectedPeg.setSelected(false);
+                selected = true;
+                selectedPeg = this;
+            }
+        } else if (hole.isSelectable()) {
+            selectedPeg = this;
+            this.setSelected(true);
+        }
+        guiView.repaint();
     }
 
     private void initComponents() {
@@ -91,25 +120,47 @@ public class HoleUI extends JPanel{
     private void adaptFontSize(JLabel label) {
         Font labelFont = label.getFont();
         String labelText = label.getText();
-
         int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
         int componentWidth = label.getWidth();
 
-        // Find out how much the font can grow in width.
-        double widthRatio = (double)componentWidth / (double)stringWidth;
-
+        double widthRatio = (double)componentWidth / (double)stringWidth;           // Find out how much the font can grow in width.
         int newFontSize = (int)(labelFont.getSize() * widthRatio);
         int componentHeight = label.getHeight();
+        int fontSizeToUse = Math.min(newFontSize, componentHeight);                 // Pick a new font size so it will not be larger than the height of label.
 
-        // Pick a new font size so it will not be larger than the height of label.
-        int fontSizeToUse = Math.min(newFontSize, componentHeight);
-
-        // Set the label's font size to the newly determined size.
-        label.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
+        label.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));    // Set the label's font size to the newly determined size.
     }
 
-    public void paintComponent(Graphics g) {
+    protected Hole getHole() {
+        return this.hole;
+    }
+
+    protected void setSelected(boolean s) {
+        this.selected = s;
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         holeLabel.setText(hole.toString());
+
+        // adaptFontSize(holeLabel);        // 100% cpu
+
+        if (selected) {
+            holeLabel.setForeground(selectColor);
+        } else if (isMouseOver) {
+            if (hole.isJumped()) {
+                holeLabel.setText("○");
+                holeLabel.setForeground(jumpedHoverColor);
+            } else {
+                holeLabel.setForeground(hoverColor);
+            }
+        } else if (hole.isJumped()) {
+            holeLabel.setText("○");
+            holeLabel.setForeground(jumpedColor);
+        } else {
+            holeLabel.setForeground(startColor);
+        }
     }
 }

@@ -17,6 +17,7 @@ public class Field {
     private Coordinate lastMoveDestination;
     private int dimensionX;
     private int dimensionY;
+    private int pegCount;
     private int moveCount;
     private int[] deadZoneMap = new int[]{0, 1, 5, 6};
 
@@ -51,6 +52,7 @@ public class Field {
         }
 
         matrix[3][3].clearPeg();        // Delete middelste bal
+        pegCount = countPegs();
     }
 
     public Hole[][] getMatrix() {
@@ -65,6 +67,10 @@ public class Field {
         return dimensionY;
     }
 
+    public int getPegCount() {
+        return pegCount;
+    }
+
     /* Groote van de stack reflecteerd het aantal effectieve zetten. */
     public int getStackSize() {
         return stack.size();
@@ -72,6 +78,24 @@ public class Field {
 
     public int getMoveCount() {
         return moveCount;
+    }
+
+    public int getCurrentPegCount() {
+        return countPegs();
+    }
+
+    /* Tel alle geïnitialiseerde pegs */
+    private int countPegs() {
+        int pegCount = 0;
+        for (Hole[] holeArray : matrix) {
+            for (Hole hole : holeArray) {
+                if (hole.hasPeg()) {
+                    pegCount++;
+                }
+            }
+        }
+
+        return pegCount;
     }
 
     public void doMove(int x, int y, int x1, int y1) throws IllegalCoordinateException, IllegalMoveException {
@@ -181,7 +205,7 @@ public class Field {
     }
 
     /* Controleer of de gegeven coördinaten geldig zijn voor een zet */
-    private boolean isLegalMove(int x, int y, int x1, int y1) {
+    public boolean isLegalMove(int x, int y, int x1, int y1) {
         boolean b = false;
 
         if (matrix[x1][y1].hasPeg()) {  // Controleer of (x1,y1) geen bal bevat
