@@ -17,7 +17,7 @@ public class Game {
         initGame();
     }
 
-    private void initGame() {
+    public void initGame() {
         this.field = new Field(7, 7);
         this.gameOver = false;
         this.endGame = false;

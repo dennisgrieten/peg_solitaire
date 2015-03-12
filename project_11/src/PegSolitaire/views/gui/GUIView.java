@@ -21,6 +21,10 @@ public class GUIView extends JFrame {
         super(title);
         game = new Game();
 
+        /* Font Smoothing */
+        System.setProperty("awt.useSystemAAFontSettings","on");
+        System.setProperty("swing.aatext", "true");
+
         initView();
         showFrame();
     }
