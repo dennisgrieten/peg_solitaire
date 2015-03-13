@@ -1,9 +1,11 @@
 package PegSolitaire.dom.field;
 
+import java.io.Serializable;
+
 /**
  * Created by dennis on 28/01/15.
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
     private int x;
     private int y;
 

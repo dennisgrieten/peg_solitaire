@@ -1,9 +1,11 @@
 package PegSolitaire.dom.field;
 
+import java.io.Serializable;
+
 /**
  * Created by dennis on 28/01/15.
  */
-public class Hole {
+public class Hole implements Serializable{
     private Field parent;
     private Peg peg;
     private Coordinate coordinate;

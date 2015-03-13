@@ -16,26 +16,26 @@ public class FieldUI extends JPanel {
     private final Game game;
     private Field field;
     private Hole[][] matrix;
-    private ArrayList<HoleUI> holelist;
 
     public FieldUI(Game g) {
         this.game = g;
         this.field = game.getField();
         this.matrix = field.getMatrix();
-        holelist = new ArrayList<>();
         initComponents();
     }
 
     private void initComponents() {
-        this.setLayout(new GridLayout(game.getDimensionX(), game.getDimensionY()));
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
         this.setBackground(new Color(0, 0, 0, 0));
-        this.setBorder(new EmptyBorder(20,20,20,20));
+        this.setBorder(new EmptyBorder(10,10,10,10));
 
         for (int i = 0; i < field.getDimensionX(); i++) {
             for (int j = 0; j < field.getDimensionY(); j++) {
                 HoleUI hole = new HoleUI(matrix[i][j], game);
-                this.add(hole);
-                holelist.add(hole);
+                gbc.gridx = i;
+                gbc.gridy = j;
+                this.add(hole, gbc);
             }
         }
     }

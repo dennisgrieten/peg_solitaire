@@ -41,7 +41,7 @@ public class HoleUI extends JPanel {
         holeLabel = new JLabel(hole.toString());
         holeLabel.setFont(monospace);
         holeLabel.setForeground(startColor);
-        this.setBackground(new Color(0,0,0,0));
+        this.setBackground(new Color(0, 0, 0, 0));
     }
 
     private void layoutComponents() {
@@ -149,6 +149,11 @@ public class HoleUI extends JPanel {
             this.setSelected(true);
         }
         guiView.repaint();
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(90, 90);
     }
 
     @Override

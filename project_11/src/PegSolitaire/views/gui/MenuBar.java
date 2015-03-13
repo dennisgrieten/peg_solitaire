@@ -90,6 +90,19 @@ public class MenuBar extends JMenuBar {
     }
 
     private void addListeners() {
+        loadGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.loadGame();
+                guiView.repaint();
+            }
+        });
+        saveGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.saveGame();
+            }
+        });
         showHelp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -103,7 +103,7 @@ public class GUIView extends JFrame {
     private void showFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
-        this.setBounds(50, 50, 800, 1000);
+        this.setBounds(50, 50, 800, 900);
         this.setPreferredSize(new Dimension(700, 700));
         //this.setResizable(false);
         this.setLocationRelativeTo(null);
