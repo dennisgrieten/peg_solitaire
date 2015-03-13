@@ -5,6 +5,8 @@ import PegSolitaire.controller.Game;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Created by dennis on 18/02/15.
@@ -34,6 +36,7 @@ public class GUIView extends JFrame {
         initMenu();
         initComponents();
         layoutComponents();
+        addListeners();
         this.validate();
     }
 
@@ -65,6 +68,8 @@ public class GUIView extends JFrame {
 
     public void showEndGameDialog() {
         JOptionPane.showMessageDialog(this, "Proficiat, je hebt het spel voltooid!", "Uitgespeeld!", JOptionPane.INFORMATION_MESSAGE);
+        String name = JOptionPane.showInputDialog(this, "Geef je naam op:");
+        game.addScore(game.getMoveCount(), name);
         restart();
     }
 
@@ -78,12 +83,29 @@ public class GUIView extends JFrame {
         initView();
     }
 
+    private void addListeners() {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+            }
+        });
+    }
+
+    private void handleWindowClosing() {
+        try {
+            game.saveScores();
+        } catch (Exception e) {
+            this.showErrorMessage(e.getMessage());
+        }
+    }
+
     private void showFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setBounds(50, 50, 800, 1000);
         this.setPreferredSize(new Dimension(700, 700));
-        this.setResizable(false);
+        //this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.doLayout();

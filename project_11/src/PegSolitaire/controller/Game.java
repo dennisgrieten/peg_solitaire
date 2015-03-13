@@ -3,6 +3,10 @@ package PegSolitaire.controller;
 import PegSolitaire.dom.exceptions.IllegalCoordinateException;
 import PegSolitaire.dom.exceptions.IllegalMoveException;
 import PegSolitaire.dom.field.Field;
+import PegSolitaire.dom.io.FieldSerializer;
+import PegSolitaire.dom.io.HighScoreIO;
+import PegSolitaire.dom.io.HighScores;
+
 import java.lang.String;
 
 /**
@@ -10,10 +14,14 @@ import java.lang.String;
  */
 public class Game {
     private Field field;
+    private FieldSerializer fieldSerializer;
+    private HighScores highScores;
     private boolean endGame;
     private boolean gameOver;
 
     public Game() {
+        this.highScores = new HighScores();
+        this.fieldSerializer = new FieldSerializer();
         initGame();
     }
 
@@ -78,12 +86,37 @@ public class Game {
         return gameOver;
     }
 
+    public void saveGame() {
+        fieldSerializer.serializeField(this.field);
+    }
+
+    public void loadGame() {
+        this.field = fieldSerializer.deserializeField();
+    }
+
     public Field getField() {
         return this.field;
     }
 
     public String printField() {
         return field.toString();
+    }
+
+
+    public void saveScores() throws Exception {
+        highScores.saveScores();
+    }
+
+    public void loadScores() throws Exception {
+        highScores.loadScores();
+    }
+
+    public void addScore(int score, String name) {
+        highScores.addScore(score, name);
+    }
+
+    public String getTop5() {
+        return highScores.toString();
     }
 
     @Override

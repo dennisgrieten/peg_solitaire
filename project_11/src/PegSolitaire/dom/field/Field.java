@@ -9,7 +9,7 @@ import java.util.Stack;
 /**
  * Created by dennis on 28/01/15.
  */
-public class Field implements Serializable {
+public class Field implements java.io.Serializable {
     private Hole[][] matrix;
     private Stack<Peg> stack;                           // Stack voor verwijderde ballen
     private Stack<Coordinate> moveHistory;              // Stack voor effectieve zetten
@@ -22,6 +22,7 @@ public class Field implements Serializable {
     private int[] deadZoneMap = new int[]{0, 1, 5, 6};
 
     public Field(int dimensionX, int dimensionY) {
+        matrix = new Hole[dimensionY][dimensionX];
         this.dimensionX = dimensionX;
         this.dimensionY = dimensionY;
         stack = new Stack<>();
@@ -35,8 +36,6 @@ public class Field implements Serializable {
 
     /* Maak matrix aan */
     private void initField() {
-        matrix = new Hole[dimensionY][dimensionX];
-
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 matrix[i][j] = new Hole(new Peg(), new Coordinate(i, j), this);
@@ -297,6 +296,8 @@ public class Field implements Serializable {
         }
         return false;
     }
+
+
 
     @Override
     public String toString() {

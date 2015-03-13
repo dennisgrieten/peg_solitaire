@@ -48,6 +48,9 @@ public class ConsoleView {
                     game.undoMove();
                     startGame(true);
                     break;
+                case 4:                 // Show highscores
+                    System.out.println(game.getTop5());
+                    break;
                 default:                // Exit
                     System.out.println("Good bye!");
                     choice = 0;
@@ -69,6 +72,7 @@ public class ConsoleView {
             } else {
                 menuItems.put(2, "Resume game");
                 menuItems.put(3, "Undo move");
+                menuItems.put(4, "Show highscores");
             }
 
             for (int i = 0; i < menuItems.size(); i++) {
