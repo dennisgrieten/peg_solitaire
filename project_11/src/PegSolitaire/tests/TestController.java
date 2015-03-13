@@ -1,8 +1,8 @@
 package PegSolitaire.tests;
 
 import PegSolitaire.controller.Game;
-import PegSolitaire.exceptions.IllegalCoordinateException;
-import PegSolitaire.exceptions.IllegalMoveException;
+import PegSolitaire.dom.exceptions.IllegalCoordinateException;
+import PegSolitaire.dom.exceptions.IllegalMoveException;
 
 /**
  * Created by dennis on 29/01/15.

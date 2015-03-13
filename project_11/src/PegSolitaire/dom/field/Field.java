@@ -1,15 +1,15 @@
-package PegSolitaire.dom;
+package PegSolitaire.dom.field;
 
-import PegSolitaire.exceptions.IllegalCoordinateException;
-import PegSolitaire.exceptions.IllegalMoveException;
+import PegSolitaire.dom.exceptions.IllegalCoordinateException;
+import PegSolitaire.dom.exceptions.IllegalMoveException;
 
-import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.util.Stack;
 
 /**
  * Created by dennis on 28/01/15.
  */
-public class Field {
+public class Field implements Serializable {
     private Hole[][] matrix;
     private Stack<Peg> stack;                           // Stack voor verwijderde ballen
     private Stack<Coordinate> moveHistory;              // Stack voor effectieve zetten

@@ -76,7 +76,7 @@ public class ControlPanel extends JPanel {
     private Font loadFont() {
         Font font = null;
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("fontello.ttf"));
+            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/PegSolitaire/files/fontello.ttf"));
         } catch (IOException | FontFormatException e) {
             GUIView guiView = (GUIView) SwingUtilities.getAncestorOfClass(GUIView.class, this);
             guiView.showErrorMessage(e.getMessage());

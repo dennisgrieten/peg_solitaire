@@ -1,8 +1,8 @@
 package PegSolitaire.views.console;
 
 import PegSolitaire.controller.Game;
-import PegSolitaire.exceptions.IllegalCoordinateException;
-import PegSolitaire.exceptions.IllegalMoveException;
+import PegSolitaire.dom.exceptions.IllegalCoordinateException;
+import PegSolitaire.dom.exceptions.IllegalMoveException;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;

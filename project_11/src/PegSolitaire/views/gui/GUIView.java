@@ -65,14 +65,12 @@ public class GUIView extends JFrame {
 
     public void showEndGameDialog() {
         JOptionPane.showMessageDialog(this, "Proficiat, je hebt het spel voltooid!", "Uitgespeeld!", JOptionPane.INFORMATION_MESSAGE);
-        game.initGame();
-        initView();
+        restart();
     }
 
     public void showGameOverDialog() {
-        JOptionPane.showMessageDialog(this, "Er zijn geen zetten meer mogelijk", "Game Over!", JOptionPane.INFORMATION_MESSAGE);
-        game.initGame();
-        initView();
+        JOptionPane.showMessageDialog(this, "Er zijn geen zetten meer mogelijk.", "Game Over!", JOptionPane.INFORMATION_MESSAGE);
+        restart();
     }
 
     public void restart() {

@@ -1,13 +1,8 @@
 package PegSolitaire.tests;
 
 import PegSolitaire.controller.Game;
-import PegSolitaire.dom.Coordinate;
-import PegSolitaire.exceptions.IllegalCoordinateException;
-import PegSolitaire.exceptions.IllegalMoveException;
-
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import PegSolitaire.dom.exceptions.IllegalCoordinateException;
+import PegSolitaire.dom.exceptions.IllegalMoveException;
 
 /**
  * Created by dennis on 29/01/15.

@@ -1,8 +1,8 @@
 package PegSolitaire.views.gui;
 
 import PegSolitaire.controller.Game;
-import PegSolitaire.dom.Field;
-import PegSolitaire.dom.Hole;
+import PegSolitaire.dom.field.Field;
+import PegSolitaire.dom.field.Hole;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

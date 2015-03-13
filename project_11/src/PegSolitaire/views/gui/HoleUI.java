@@ -1,9 +1,9 @@
 package PegSolitaire.views.gui;
 
 import PegSolitaire.controller.Game;
-import PegSolitaire.dom.Hole;
-import PegSolitaire.exceptions.IllegalCoordinateException;
-import PegSolitaire.exceptions.IllegalMoveException;
+import PegSolitaire.dom.field.Hole;
+import PegSolitaire.dom.exceptions.IllegalCoordinateException;
+import PegSolitaire.dom.exceptions.IllegalMoveException;
 
 import javax.swing.*;
 import java.awt.*;

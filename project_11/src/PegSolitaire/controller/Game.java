@@ -1,8 +1,8 @@
 package PegSolitaire.controller;
 
-import PegSolitaire.exceptions.IllegalCoordinateException;
-import PegSolitaire.exceptions.IllegalMoveException;
-import PegSolitaire.dom.Field;
+import PegSolitaire.dom.exceptions.IllegalCoordinateException;
+import PegSolitaire.dom.exceptions.IllegalMoveException;
+import PegSolitaire.dom.field.Field;
 import java.lang.String;
 
 /**
