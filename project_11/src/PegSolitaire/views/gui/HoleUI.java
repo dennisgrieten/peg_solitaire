@@ -7,6 +7,8 @@ import PegSolitaire.exceptions.IllegalMoveException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -35,7 +37,53 @@ public class HoleUI extends JPanel {
         addListeners();
     }
 
+    private void initComponents() {
+        holeLabel = new JLabel(hole.toString());
+        holeLabel.setFont(monospace);
+        holeLabel.setForeground(startColor);
+        this.setBackground(new Color(0,0,0,0));
+    }
+
+    private void layoutComponents() {
+        this.setLayout(new BorderLayout());
+        holeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        holeLabel.setVerticalAlignment(SwingConstants.CENTER);
+        this.add(holeLabel, BorderLayout.CENTER);
+    }
+
+    private void adaptFontSize(JLabel label) {
+        Font labelFont = label.getFont();
+        String labelText = label.getText();
+        int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
+        int componentWidth = label.getWidth();
+
+        double widthRatio = (double)componentWidth / (double)stringWidth;           // Find out how much the font can grow in width.
+        int newFontSize = (int)(labelFont.getSize() * widthRatio);
+        int componentHeight = label.getHeight();
+        int fontSizeToUse = Math.min(newFontSize, componentHeight);                 // Pick a new font size so it will not be larger than the height of label.
+
+        label.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));    // Set the label's font size to the newly determined size.
+    }
+
+    protected Hole getHole() {
+        return this.hole;
+    }
+
+    protected void setSelected(boolean s) {
+        this.selected = s;
+    }
+
     private void addListeners() {
+        /* ComponentListener */
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                adaptFontSize(holeLabel);
+            }
+        });
+
+        /* MouseListener */
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -90,7 +138,6 @@ public class HoleUI extends JPanel {
                     } else {
                         selectedPeg.setSelected(false);
                     }
-
                 }
             } else if (hole.isSelectable()) {
                 selectedPeg.setSelected(false);
@@ -104,60 +151,20 @@ public class HoleUI extends JPanel {
         guiView.repaint();
     }
 
-    private void initComponents() {
-        holeLabel = new JLabel(hole.toString());
-        holeLabel.setFont(monospace);
-        holeLabel.setForeground(startColor);
-    }
-
-    private void layoutComponents() {
-        this.setLayout(new BorderLayout());
-        holeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        holeLabel.setVerticalAlignment(SwingConstants.CENTER);
-        this.add(holeLabel, BorderLayout.CENTER);
-    }
-
-    private void adaptFontSize(JLabel label) {
-        Font labelFont = label.getFont();
-        String labelText = label.getText();
-        int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
-        int componentWidth = label.getWidth();
-
-        double widthRatio = (double)componentWidth / (double)stringWidth;           // Find out how much the font can grow in width.
-        int newFontSize = (int)(labelFont.getSize() * widthRatio);
-        int componentHeight = label.getHeight();
-        int fontSizeToUse = Math.min(newFontSize, componentHeight);                 // Pick a new font size so it will not be larger than the height of label.
-
-        label.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));    // Set the label's font size to the newly determined size.
-    }
-
-    protected Hole getHole() {
-        return this.hole;
-    }
-
-    protected void setSelected(boolean s) {
-        this.selected = s;
-        repaint();
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         holeLabel.setText(hole.toString());
 
-        // adaptFontSize(holeLabel);        // 100% cpu
-
         if (selected) {
             holeLabel.setForeground(selectColor);
         } else if (isMouseOver) {
             if (hole.isJumped()) {
-                holeLabel.setText("○");
                 holeLabel.setForeground(jumpedHoverColor);
             } else {
                 holeLabel.setForeground(hoverColor);
             }
         } else if (hole.isJumped()) {
-            holeLabel.setText("○");
             holeLabel.setForeground(jumpedColor);
         } else {
             holeLabel.setForeground(startColor);

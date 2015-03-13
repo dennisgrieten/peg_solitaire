@@ -1,10 +1,9 @@
 package PegSolitaire.views.gui;
 
 import PegSolitaire.controller.Game;
-import PegSolitaire.exceptions.IllegalCoordinateException;
-import PegSolitaire.exceptions.IllegalMoveException;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
@@ -16,6 +15,7 @@ public class GUIView extends JFrame {
     private JPanel gamePanel;
     private JPanel controlPanel;
     private JPanel scorePanel;
+    private Color darkBackground = new Color(40,40,40);
 
     public GUIView(String title) throws HeadlessException {
         super(title);
@@ -46,6 +46,9 @@ public class GUIView extends JFrame {
 
     private void layoutComponents() {
         scorePanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 30, 5));     // Flowlayout (int align, int hgap, int vgap)
+        controlPanel.setBackground(darkBackground);
+        controlPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        gamePanel.setBackground(darkBackground);
         gamePanel.add(scorePanel, BorderLayout.NORTH);
         gamePanel.add(new FieldUI(game), BorderLayout.CENTER);
         gamePanel.add(controlPanel, BorderLayout.SOUTH);
@@ -62,26 +65,28 @@ public class GUIView extends JFrame {
 
     public void showEndGameDialog() {
         JOptionPane.showMessageDialog(this, "Proficiat, je hebt het spel voltooid!", "Uitgespeeld!", JOptionPane.INFORMATION_MESSAGE);
+        game.initGame();
+        initView();
     }
 
     public void showGameOverDialog() {
         JOptionPane.showMessageDialog(this, "Er zijn geen zetten meer mogelijk", "Game Over!", JOptionPane.INFORMATION_MESSAGE);
+        game.initGame();
+        initView();
     }
 
-    public void showHowItIsDone() {
-        try {
-            fieldUI.showHowItIsDone();
-        } catch (IllegalCoordinateException | IllegalMoveException e) {
-            showErrorMessage(e.getMessage());
-        }
-        showEndGameDialog();
+    public void restart() {
+        game.initGame();
+        initView();
     }
 
     private void showFrame() {
-        this.setBounds(50, 50, 900, 900);
-        this.setPreferredSize(new Dimension(700, 700));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
+        this.setBounds(50, 50, 800, 1000);
+        this.setPreferredSize(new Dimension(700, 700));
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.doLayout();
     }

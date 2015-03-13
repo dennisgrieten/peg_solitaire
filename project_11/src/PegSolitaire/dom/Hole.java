@@ -88,6 +88,6 @@ public class Hole {
 
     @Override
     public String toString() {
-        return (deadZone?" ": hasPeg() ?"◉":jumped?"◎":"○");      //●◎
+        return (deadZone?" ": hasPeg() ?"◉":jumped?"○":"○");      //●◎
     }
 }

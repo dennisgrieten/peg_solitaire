@@ -59,7 +59,19 @@ public class TestExceptions {
         System.out.println("### Exceptions Test ###");
         int j = 0;
 
-        for (int i = 0; i < moves.length;) {
+        for (int i = 0; i < 36;) {
+            try {
+                game.doMove(moves[i++],moves[i++],moves[i++],moves[i++]);
+            } catch (IllegalCoordinateException | IllegalMoveException e) {
+                System.out.printf("%-40s: %s", tests[j], e.getMessage());
+                j++;
+                System.out.print("\n");
+            }
+        }
+
+        String begin = game.printField();
+
+        for (int i = 36; i < moves.length;) {
             try {
                 game.doMove(moves[i++],moves[i++],moves[i++],moves[i++]);
             } catch (IllegalCoordinateException | IllegalMoveException e) {
@@ -70,6 +82,7 @@ public class TestExceptions {
         }
 
         System.out.println("\n" + game.printField());
+        System.out.println(begin);
     }
 }
 

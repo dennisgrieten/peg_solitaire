@@ -9,7 +9,7 @@ import java.awt.*;
  * Created by dennis on 10/03/15.
  */
 public class ScorePanel extends JPanel {
-    private Game game;
+    private final Game game;
     private JLabel movesLabel;
     private JLabel pegsLabel;
     private Font monospace = new Font("monospaced", Font.ITALIC, 30);

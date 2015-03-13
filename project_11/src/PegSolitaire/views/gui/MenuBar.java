@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
  */
 public class MenuBar extends JMenuBar {
     private final Game game;
+    GUIView guiView = (GUIView) SwingUtilities.getAncestorOfClass(GUIView.class, this);
     private JMenu options;
     private JMenu view;
     private JMenu edit;
@@ -60,13 +61,10 @@ public class MenuBar extends JMenuBar {
         options.add(saveGame);
         options.add(loadGame);
         options.add(new JSeparator());
-        options.add(showExample);
-        options.add(new JSeparator());
         options.add(exit);
 
         /* View */
         view.add(fullscreen);
-        view.add(darkTheme);
 
         /* Edit */
         edit.add(undo);
@@ -78,21 +76,28 @@ public class MenuBar extends JMenuBar {
 
     private void setAccelerators() {
         /* Options */
-        saveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));    // Save Game: CTRL+S
+        saveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));    // Save Game:   CTRL+S
+        newGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));     // New Game:    CTRL+N
 
         /* View */
-        fullscreen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));              // Fullscreen: F11
-        darkTheme.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, Event.CTRL_MASK));   // Dark Theme: CTRL+D
+        fullscreen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));              // Fullscreen:  F11
 
         /* Edit */
-        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Event.CTRL_MASK));        // Undo Move: CTRL+Z
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Event.CTRL_MASK));        // Undo Move:   CTRL+Z
     }
 
     private void addListeners() {
-        showExample.addActionListener(new ActionListener() {
+        newGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handleShowExample();
+                handleNewGame();
+            }
+        });
+        undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.undoMove();
+                getTopLevelAncestor().repaint();
             }
         });
         exit.addActionListener(new ActionListener() {
@@ -103,8 +108,8 @@ public class MenuBar extends JMenuBar {
         });
     }
 
-    private void handleShowExample() {
+    private void handleNewGame() {
         GUIView guiView = (GUIView) SwingUtilities.getAncestorOfClass(GUIView.class, this);
-        guiView.showHowItIsDone();
+        guiView.restart();
     }
 }

@@ -45,8 +45,6 @@ public class TestEndGameEnglish {
                 3, 1, 3, 3,
         };
 
-        int x = 0, y = 0, x1 = 0, y1 = 0;
-
         System.out.println("### Endgame Test ###");
         System.out.println(game.printField());
         System.out.print("Plot moves\n\n");
